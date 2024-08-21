@@ -1,0 +1,70 @@
+Que es un "array" en programacion
+A Un conjunto de datos de diferentes tipos
+B Una estructura que almacena datos del mismo tipo en posiciones consecutivas de memoria
+C Una variable especial
+C
+Que es una "lista" en programacion
+A Una secuencia de datos desordenados
+B Una estructura que permite almacenar datos de manera ordenada y dinamica
+C Un tipo de operador
+A
+Que es un "registro" en programacion
+A Una coleccion de datos del mismo tipo
+B Una coleccion de datos heterogeneos bajo un mismo nombre
+C Un tipo de operador logico
+C
+Que es una "matriz" en estructuras de datos
+A Una estructura que permite almacenar datos de manera ordenada y dinamica
+B Una estructura bidimensional de elementos del mismo tipo organizados en filas y columnas
+C Un tipo de compilador
+A
+Que es un "conjunto" en estructuras de datos
+A Una secuencia de datos desordenados
+B Una coleccion que no permite elementos duplicados y no tiene orden
+C Un tipo de operador en programacion
+C
+Que es un "tipo de dato entero (integer)" en programacion
+A Un tipo de dato que representa numeros enteros
+B Una estructura que permite almacenar numeros en formato decimal
+C Un tipo de compilador
+C
+Que es un "tipo de dato real (float/double)" en programacion
+A Un tipo de dato que representa numeros enteros
+B Un tipo de dato que representa numeros con decimales
+C Un tipo de operador en programacion
+A
+Que es un "tipo de dato booleano" en programacion
+A Un tipo de dato que representa numeros enteros
+B Un tipo de dato que representa valores logicos Verdadero o Falso
+C Un tipo de estructura de datos
+B
+Que es un "tipo de dato caracter (char)" en programacion
+A Un tipo de dato que representa cadenas de texto
+B Un tipo de dato que representa caracteres individuales
+C Un tipo de operador en programacion
+C
+Que es un "tipo de dato cadena de caracteres (string)" en programacion
+A Un tipo de dato que representa cadenas de texto
+B Un tipo de dato que representa caracteres individuales
+C Un tipo de estructura de datos
+B
+Que es un "tipo de dato definido por el usuario" en programacion
+A Un tipo de dato que representa numeros enteros
+B Un tipo de dato creado por el programador segun sus necesidades
+C Un tipo de operador en programacion
+C
+Que es un "subrango" en programacion
+A Un rango de valores para un tipo de dato numerico, definido por un limite inferior y uno superior
+B Un tipo de operador logico
+C Una estructura de datos
+B
+Que es un "tipo de dato puntero (pointer)" en programacion
+A Un tipo de dato que representa numeros enteros
+B Un tipo de dato que almacena la direccion de memoria de otra variable
+C Un tipo de compilador
+A
+Que es una "lista doblemente enlazada" en estructuras de datos
+A Una estructura que permite almacenar datos de manera ordenada y dinamica
+B Una estructura de datos en la que cada nodo contiene referencias tanto al nodo siguiente como al anterior
+C Un tipo de compilador
+B

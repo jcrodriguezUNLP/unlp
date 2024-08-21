@@ -1,0 +1,260 @@
+Trabajo, energía cinética y potencial:
+Trabajo (
+𝑊
+W): Se calcula multiplicando la magnitud de la fuerza (
+𝐹
+F) por la distancia (
+𝑑
+d) que se mueve el objeto en la dirección de la fuerza, y el coseno del ángulo (
+𝜃
+θ) entre la fuerza y el desplazamiento. La unidad del trabajo es el joule (J).
+𝑊
+=
+𝐹
+𝑑
+cos
+⁡
+(
+𝜃
+)
+W=Fdcos(θ)
+Energía cinética (
+𝐾
+𝐸
+KE): Se calcula como la mitad del producto de la masa (
+𝑚
+m) y el cuadrado de la velocidad (
+𝑣
+v). La unidad de la energía cinética también es el joule (J).
+𝐾
+𝐸
+=
+1
+2
+𝑚
+𝑣
+2
+KE= 
+2
+1
+​
+ mv 
+2
+ 
+Energía potencial (
+𝑃
+𝐸
+PE): Para el caso de la energía potencial gravitatoria, se calcula multiplicando la masa (
+𝑚
+m), la aceleración debido a la gravedad (
+𝑔
+g), y la altura (
+ℎ
+h) sobre una referencia. La unidad de la energía potencial también es el joule (J).
+𝑃
+𝐸
+=
+𝑚
+𝑔
+ℎ
+PE=mgh
+Conservación de la energía:
+Teorema del trabajo-energía: Establece que el trabajo neto (
+𝑊
+neto
+W 
+neto
+​
+ ) realizado sobre un objeto es igual al cambio en su energía cinética (
+Δ
+𝐾
+𝐸
+ΔKE). Si solo actúan fuerzas conservativas, el cambio en la energía potencial (
+Δ
+𝑃
+𝐸
+ΔPE) también se incluiría.
+𝑊
+neto
+=
+Δ
+𝐾
+𝐸
++
+Δ
+𝑃
+𝐸
+W 
+neto
+​
+ =ΔKE+ΔPE
+Energía mecánica total (
+𝐸
+E): Es la suma de la energía cinética (
+𝐾
+𝐸
+KE) y la energía potencial (
+𝑃
+𝐸
+PE) de un sistema. En un sistema aislado (donde no hay fuerzas externas), se mantiene constante.
+𝐸
+=
+𝐾
+𝐸
++
+𝑃
+𝐸
+E=KE+PE
+Principio de conservación de la energía: Afirma que en un sistema aislado, la energía total (cinética más potencial) permanece constante.
+𝐸
+inicial
+=
+𝐸
+final
+E 
+inicial
+​
+ =E 
+final
+​
+ 
+Movimiento armónico simple (MAS):
+Periodo (
+𝑇
+T): Se calcula como el inverso de la frecuencia (
+𝑓
+f). Es el tiempo necesario para completar un ciclo completo de oscilación.
+𝑇
+=
+1
+𝑓
+T= 
+f
+1
+​
+ 
+Frecuencia (
+𝑓
+f): Se calcula como el inverso del periodo (
+𝑇
+T). Es el número de ciclos completos que ocurren en un segundo.
+𝑓
+=
+1
+𝑇
+f= 
+T
+1
+​
+ 
+Amplitud (
+𝐴
+A): Es la máxima distancia de oscilación desde la posición de equilibrio.
+Energía potencial elástica: Se calcula como la mitad del producto de la constante elástica del resorte (
+𝑘
+k) y el cuadrado de la deformación (
+𝑥
+x).
+𝑃
+𝐸
+=
+1
+2
+𝑘
+𝑥
+2
+PE= 
+2
+1
+​
+ kx 
+2
+ 
+Sistema de partículas:
+Centro de masa (
+𝑥
+cm
+x 
+cm
+​
+ ): Se calcula como la suma de los productos de las masas (
+𝑚
+𝑖
+m 
+i
+​
+ ) y las posiciones (
+𝑥
+𝑖
+x 
+i
+​
+ ), dividido por la suma de las masas.
+𝑥
+cm
+=
+∑
+𝑚
+𝑖
+𝑥
+𝑖
+∑
+𝑚
+𝑖
+x 
+cm
+​
+ = 
+∑m 
+i
+​
+ 
+∑m 
+i
+​
+ x 
+i
+​
+ 
+​
+ 
+Momento lineal (
+𝑝
+p): Se calcula como el producto de la masa (
+𝑚
+m) y la velocidad (
+𝑣
+v) de una partícula.
+𝑝
+=
+𝑚
+𝑣
+p=mv
+Impulso (
+𝐽
+J): Se calcula como el cambio en el momento lineal (
+Δ
+𝑝
+Δp) de un sistema de partículas, que a su vez es igual a la fuerza neta (
+𝐹
+net
+F 
+net
+​
+ ) aplicada sobre un intervalo de tiempo (
+Δ
+𝑡
+Δt).
+𝐽
+=
+Δ
+𝑝
+=
+𝐹
+net
+Δ
+𝑡
+J=Δp=F 
+net
+​
+ Δt

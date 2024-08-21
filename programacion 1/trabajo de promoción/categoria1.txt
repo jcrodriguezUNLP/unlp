@@ -1,0 +1,100 @@
+Que es un algoritmo en programacion
+A Un lenguaje de programacion
+B Una secuencia de pasos para resolver un problema
+C Un tipo de estructura de datos
+C
+Para que se utiliza un compilador
+A Para ejecutar programas en tiempo real
+B Para convertir codigo fuente en codigo maquina
+C Para depurar errores en el codigo
+A
+Que es la depuracion de codigo
+A Mejorar la eficiencia del codigo
+B Eliminar errores del codigo
+C Cambiar el lenguaje de programacion del codigo
+B
+Que es la recursividad
+A Un bucle infinito
+B Una funcion que se llama a si misma
+C Un tipo de variable
+A
+Que es un bucle
+A Una secuencia de datos
+B Una estructura que repite codigo mientras se cumpla una condicion
+C Un error comun en programacion
+B
+Que es un lenguaje de programacion
+A Un sistema para comunicarse con la computadora
+B Una herramienta para crear graficos
+C Un programa para navegar por internet
+C
+Que es un operador en programacion
+A Una persona que escribe codigo
+B Una instruccion para realizar una operacion matematica o logica
+C Un tipo de error en el codigo
+A
+Que es una variable en programacion
+A Un contenedor para almacenar datos 
+B Una funcion que realiza una tarea especifica 
+C Un error en el codigo 
+C
+Que diferencia hay entre una constante y una variable
+A Una variable es un dato y una constante no 
+B Las variables deben ser declaradas pero las constantes no 
+C Las variables y las constantes deben ser declaradas pero a las constantes no se les puede modificar su valor 
+C
+Que es un comentario en el codigo
+A Una linea que no se ejecuta y sirve para explicar partes del codigo 
+B Un mensaje de error 
+C Una instruccion especial 
+A
+Que significa "compilar" un programa
+A Ejecutarlo varias veces para encontrar errores 
+B Traducirlo a otro lenguaje de programacion 
+C Convertir el codigo fuente en un archivo ejecutable 
+C
+Que es la "logica booleana"
+A La logica relacionada con numeros enteros 
+B La logica basada en dos valores: verdadero o falso 
+C La logica utilizada exclusivamente en bases de datos 
+A
+Que significa "ordenar" una lista
+A Cambiar los elementos de lugar aleatoriamente
+B Organizar los elementos siguiendo un criterio especifico, como numerico o alfabetico
+C Eliminar elementos duplicados de la lista
+B
+Que significa "inicializar" una variable
+A Asignarle un valor por primera vez 
+B Eliminarla del codigo fuente 
+C Cambiar su tipo durante la ejecucion del programa 
+B
+Que es un bug en programacion
+A Un tipo de variable
+B Un error en el codigo
+C Una estructura de control
+C
+Que es un interprete
+A Un programa que ejecuta codigo fuente linea por linea
+B Un tipo de bucle
+C Una estructura de datos
+A
+Que es una funcion en programacion
+A Una coleccion de datos
+B Un bloque de codigo que realiza una tarea especifica
+C Un tipo de bucle
+C
+Que es un bucle infinito
+A Un bucle que nunca termina
+B Un bucle que se ejecuta una vez
+C Un tipo de variable
+A
+Que es una constante en programacion
+A Un valor que no cambia durante la ejecucion del programa
+B Un tipo de bucle
+C Una estructura de control
+B
+Que es la semantica en programacion
+A Las reglas y estructura del lenguaje de programacion
+B El significado de las instrucciones
+C Un tipo de bucle
+C

@@ -1,0 +1,90 @@
+Que es la "modularizacion" en programacion
+A El proceso de dividir un programa en modulos mas pequenos y manejables
+B Un tipo de estructura de datos
+C Un tipo de operador en programacion
+A
+Que es un "modulo" en programacion
+A Una estructura que almacena datos del mismo tipo en posiciones consecutivas de memoria
+B Una unidad independiente de codigo que realiza una tarea especifica y se puede reutilizar
+C Un tipo de compilador
+B
+Que es una "funcion" en programacion
+A Una estructura que permite almacenar datos de manera ordenada y dinamica
+B Un bloque de codigo que realiza una tarea especifica y puede devolver un valor
+C Un tipo de operador en programacion
+C
+Que es un "procedimiento" en programacion
+A Una coleccion de datos del mismo tipo
+B Un bloque de codigo que realiza una tarea especifica pero no devuelve un valor
+C Un tipo de operador logico
+A
+Que es un "parametro" en programacion
+A Una secuencia de datos desordenados
+B Un valor que se pasa a una funcion o procedimiento para ser utilizado dentro de ellos
+C Un tipo de operador en programacion
+B
+Que es el "pasaje de parametros" en programacion
+A Un conjunto de datos de diferentes tipos
+B El proceso de enviar valores a una funcion o procedimiento para que los utilice
+C Una variable especial
+C
+Que es una "variable local" en programacion
+A Una coleccion de datos heterogeneos bajo un mismo nombre
+B Una variable definida dentro de una funcion o procedimiento que solo es accesible dentro de ella
+C Un tipo de operador logico
+B
+Que es una "variable global" en programacion
+A Una estructura que permite almacenar datos de manera ordenada y dinamica
+B Una variable definida fuera de cualquier funcion o procedimiento y accesible desde cualquier parte del programa
+C Un tipo de compilador
+A
+Que es una "estructura de control" en programacion
+A Una secuencia de datos desordenados
+B Una instruccion o grupo de instrucciones que determina el flujo de ejecucion del programa
+C Un tipo de operador en programacion
+B
+Que es una "estructura condicional" en programacion
+A Una estructura que permite almacenar datos de manera ordenada y dinamica
+B Una estructura de control que ejecuta ciertas instrucciones solo si se cumple una condicion
+C Un tipo de compilador
+C
+Que es un "if-else" en programacion
+A Una coleccion de datos del mismo tipo
+B Una estructura condicional que ejecuta un bloque de codigo si se cumple una condicion y otro bloque si no se cumple
+C Un tipo de operador logico
+A
+Que es un "bucle" en programacion
+A Una estructura que permite almacenar datos de manera ordenada y dinamica
+B Una estructura de control que repite un bloque de codigo mientras se cumple una condicion
+C Un tipo de compilador
+C
+Que es un "bucle while" en programacion
+A Una secuencia de datos desordenados
+B Un tipo de bucle que repite un bloque de codigo mientras se cumple una condicion
+C Un tipo de operador en programacion
+A
+Que es un "bucle for" en programacion
+A Un conjunto de datos de diferentes tipos
+B Un tipo de bucle que repite un bloque de codigo un numero especifico de veces
+C Una variable especial
+B
+Que es una "estructura de control iterativa" en programacion
+A Una estructura que permite almacenar datos de manera ordenada y dinamica
+B Una estructura de control que permite repetir un conjunto de instrucciones un numero determinado de veces o mientras se cumple una condicion
+C Un tipo de compilador
+A
+Que es una "estructura de control selectiva" en programacion
+A Una secuencia de datos desordenados
+B Una estructura de control que decide que conjunto de instrucciones ejecutar segun una condicion
+C Un tipo de operador en programacion
+B
+Que es un "parametro por valor" en programacion
+A Un valor que se pasa a una funcion o procedimiento para ser utilizado dentro de ellos
+B Un tipo de parametro que hace referencia a la direccion de memoria de una variable
+C Una variable especial
+C
+Que es un "parametro por referencia" en programacion
+A Un valor que se pasa a una funcion o procedimiento para ser utilizado dentro de ellos
+B Un tipo de parametro que permite modificar el valor de la variable original desde el procedimiento
+C Una variable especial
+B
