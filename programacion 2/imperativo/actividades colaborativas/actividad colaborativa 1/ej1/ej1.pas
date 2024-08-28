@@ -144,48 +144,56 @@ type
 //
 
 // function minDistNodo (ar:TArbol ; var minAct : TVenta ): TArbol;
-    function minDistNodo (ar:TArbol ; var minAct : Tventa ): TArbol;
-    begin
-        if (ar <> nil) then 
-        begin
-            if ( ar^.venta.distancia < minAct.distancia ) then
-            begin
-              minAct := ar^.venta;
-            end else
-            begin
-                minDistNodo(ar^.HijoI,minAct ) ;
-                minDistNodo(ar^.HijoD,minAct ) ;
-            end ;
-        end else
-        begin
-            minDistNodo:= minAct;
-        end ;
-    end ;
+    // function minDistNodo (ar:TArbol ; var minAct : Tventa ): TArbol;
+    // begin
+    //     if (ar <> nil) then 
+    //     begin
+    //         if ( ar^.venta.distancia < minAct.distancia ) then
+    //         begin
+    //           minAct := ar^.venta;
+    //         end else
+    //         begin
+    //             minDistNodo(ar^.HijoI,minAct ) ;
+    //             minDistNodo(ar^.HijoD,minAct ) ;
+    //         end ;
+    //     end else
+    //     begin
+    //         minDistNodo:= minAct;
+    //     end ;
+    // end ;
 //
 
 // function BuscarDestino (ar:TArbol ; destino:string): Tventa;
-    function Buscardestino (ar:TArbol ; destino:string): Tventa;
-    begin
-        if (ar <> nil) then 
-        begin
-            if (ar^.destino = destino) then
-            BuscarDestino:= ar^.destino
-            else begin
-                if (ar^.destino > destino) 
-                then buscardestino(ar^.HijoI,destino)
-                else buscardestino(ar^.HijoD, destino ) ;
-            end ;
-        end ;
-    end ;
+    // function Buscardestino (ar:TArbol ; destino:string): Tventa;
+    // begin
+    //     if (ar <> nil) then 
+    //     begin
+    //         if (ar^.venta.destino = destino) then
+    //         BuscarDestino:= ar^.destino
+    //         else begin
+    //             if (ar^.destino > destino) 
+    //             then buscardestino(ar^.HijoI,destino)
+    //             else buscardestino(ar^.HijoD, destino ) ;
+    //         end ;
+    //     end ;
+    // end ;
 //
 
-//
-    function nodoMinDist ( arbol : TArbol ; minDistact : Integer ) : TArbol ;
+// function minDistNodo ( arbol : TArbol ; minDistAct : TArbol ) : TArbol ;
+    function minDistNodo ( arbol : TArbol ; minDistAct : TArbol ) : TArbol ;
     begin
         if ( arbol <> Nil ) then
         begin
+            if ( (minDistAct = Nil) or (arbol^.venta.distancia < minDistAct^.venta.distancia) ) then
+            begin
+                minDistAct := arbol ;
+            end ;
             
+            minDistAct := minDistNodo( arbol^.HijoI , minDistAct ) ; 
+            minDistAct := minDistNodo( arbol^.HijoD , minDistAct ) ;
         end ;
+
+        minDistNodo := minDistAct ;
     end ;
 //
 
@@ -198,6 +206,7 @@ type
         espacio  : Integer ;
         opcion   : Integer ;
         destino  : string  ;
+        minDist  : TArbol  ;
 
     begin
         repeat
@@ -217,30 +226,50 @@ type
 
             if ( opcion <> 0) then
             begin          
-                case opcion of 
-                1: inicializarEstructura(arbol ) ;
-                2: begin
-                    leerVenta(venta ) ;
-                    GenerarArbolR(arbol,venta ) ;
-                 end ;
-                3: begin
-                    nivel := 0 ;
-                    nivelAnt := -1 ;
-                    espacio := 50 ;
-                    graficarArbol(arbol, espacio, nivel, nivelAnt)
-                   end ; 
-                4: begin
-                  Writeln('ingresar destino a buscar' ) ;
-                  ReadLn(destino ) ;
-                  Venta := BuscarDestino(arbol,destino ) ;
-                  WriteLn('el destino ', venta.nombre, 'tiene', venta.cant , 'pasajes, y esta a', venta.distancia, 'km' ) ;
-                end ;
-               5: begin
-                 
-               end ;
+                case opcion of
+                    1: begin
+                        inicializarEstructura(arbol ) ;
+                    end ;
+                    2: begin
+                            leerVenta(venta ) ;
+                            GenerarArbolR(arbol,venta ) ;
+                    end ;
+                    3: begin
+                            nivel := 0 ;
+                            nivelAnt := -1 ;
+                            espacio := 50 ;
+                            graficarArbol(arbol, espacio, nivel, nivelAnt) ;
+                    end ; 
+                    4: begin
+                            // Writeln('ingresar destino a buscar' ) ;
+                            // ReadLn(destino ) ;
+                            // Venta := BuscarDestino(arbol,destino ) ;
+                            // WriteLn('el destino ', venta.nombre, 'tiene', venta.cant , 'pasajes, y esta a', venta.distancia, 'km' ) ;
+                    end ;
+                    5: begin
+                        separador( 1 ) ;
+                        minDist := Nil ;
+                        
+                        minDist := minDistNodo( arbol , minDist ) ;
+
+                        if minDist = Nil then
+                        begin
+                            WriteLn ( 'lista vacia' ) ;
+                        end else
+                        begin
+                            WriteLn ( 'El destino con menor distancia es: ' ) ;
+
+                            with (minDist^) do
+                            begin
+                                WriteLn( '    nombre:'     , venta.nombre        ) ;
+                                WriteLn( '    distancia: ' , venta.distancia:2:2 ) ;
+                                WriteLn( '    cantidad:'   , venta.cant          ) ;
+                            end ;
+                        end;
+                    end ;
                 end ;
             end ;
-        until ( opcion <> 0)
+        until ( opcion = 0) ;
     end ;
 //
 
