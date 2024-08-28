@@ -1,4 +1,4 @@
-Program GenerarLista ;
+Program GenerarArbol ;
 Type
   TLista = ^TNodoLista ;
 
@@ -241,11 +241,10 @@ Type
   // procedure generarArbol ( var arbol : TArbol ; L : TLista ) ;
     procedure generarArbol ( var arbol : TArbol ; L : TLista ) ;
     begin
-      while ( L <> Nil ) do
+      if ( L <> Nil ) then
       begin
-        insertar( arbol , L^.numero ) ;
-
-        L := L^.sig ;
+        insertar     ( arbol , L^.numero ) ;
+        generarArbol ( arbol , L^.sig    ) ;
       end ;
     end ;
   //
@@ -307,61 +306,57 @@ Type
     end ;
   //
 
-  // function buscar ( arbol : TArbol ; numero : Integer ) : TArbol ;
-    function buscar ( arbol : TArbol ; numero : Integer )  : TArbol ;
+  // function buscarNodo ( arbol : TArbol ; numero : Integer ) : TArbol ;
+    function buscarNodo ( arbol : TArbol ; numero : Integer )  : TArbol ;
     begin
       if ( arbol <> Nil ) then
       begin
         if ( numero = arbol^.numero ) then
         begin
-          buscar := arbol ;
+          buscarNodo := arbol ;
         end
         else if ( numero < arbol^.numero) then
         begin
-          buscar := buscar( arbol^.hijoIzq , numero ) ;
+          buscarNodo := buscarNodo( arbol^.hijoIzq , numero ) ;
         end else
         begin
-          buscar := buscar( arbol^.hijoDer , numero ) ;
+          buscarNodo := buscarNodo( arbol^.hijoDer , numero ) ;
         end ;
       end else
       begin
-        buscar := Nil ;
+        buscarNodo := Nil ;
       end ;
     end ;
   //
 
-  // function minimo ( arbol : TArbol ; minAct : Integer ) : Integer ;
-    function minimo ( arbol : TArbol ; minAct : Integer ) : Integer ;
+  // function valorMinimo ( arbol : TArbol ) : Integer ;
+    function valorMinimo ( arbol : TArbol ) : Integer ;
     begin
       if ( arbol <> Nil ) then
       begin
-        if ( (arbol^.numero < minAct) or (minAct = -1) ) then
+        if ( arbol^.hijoIzq <> Nil ) then
         begin
-          minAct := arbol^.numero ;
+          valorMinimo := valorMinimo( arbol^.hijoIzq ) ;
+        end else
+        begin
+          valorMinimo := arbol^.numero ;
         end ;
-
-        minimo := minimo( arbol^.hijoIzq , minAct ) ;
-      end
-      else begin
-        minimo := minAct ;
       end ;
     end ; 
   //
 
-  // function maximo ( arbol : TArbol ; maxAct : Integer ) : Integer ;
-    function maximo ( arbol : TArbol ; maxAct : Integer ) : Integer ;
+  // function valorMaximo ( arbol : TArbol ) : Integer ;
+    function valorMaximo ( arbol : TArbol ) : Integer ;
     begin
       if ( arbol <> Nil ) then
       begin
-        if ( maxAct < arbol^.numero ) then
+        if ( arbol^.hijoDer <> Nil ) then
         begin
-          maxAct := arbol^.numero ;
+          valorMaximo := valorMaximo( arbol^.hijoDer ) ;
+        end else
+        begin
+          valorMaximo := arbol^.numero ;
         end ;
-
-        maximo := maximo( arbol^.hijoDer , maxAct ) ;
-      end
-      else begin
-        maximo := maxAct ;
       end ;
     end ; 
   //
@@ -383,11 +378,6 @@ Var
       aBuscar  : Integer ;
       nodo     : TArbol  ;
     //
-
-    // min max
-      minAct   : Integer ;
-      maxAct   : Integer ;
-    //
   //
 
 
@@ -404,15 +394,15 @@ begin
     generarArbol( arbol , L         ) ;
 
     // imprimir en los distintos ordenes
-      // separador               ( 1             ) ;
-      // WriteLn                 ( 'En orden:'   ) ;
-      // imprimirArbol_enOrden   ( arbol         ) ;
-      // separador               ( 1             ) ;
-      // WriteLn                 ( 'Pre orden:'  ) ;
-      // imprimirArbol_preOrden  ( arbol         ) ;
-      // separador               ( 1             ) ;
-      // WriteLn                 ( 'Post orden:' ) ;
-      // imprimirArbol_PostOrden ( arbol         ) ;
+      separador               ( 1             ) ;
+      WriteLn                 ( 'En orden:'   ) ;
+      imprimirArbol_enOrden   ( arbol         ) ;
+      separador               ( 1             ) ;
+      WriteLn                 ( 'Pre orden:'  ) ;
+      imprimirArbol_preOrden  ( arbol         ) ;
+      separador               ( 1             ) ;
+      WriteLn                 ( 'Post orden:' ) ;
+      imprimirArbol_PostOrden ( arbol         ) ;
     //
 
     // graficar (BOLUDES MIA)
@@ -426,7 +416,7 @@ begin
       graficarArbol ( arbol , espacio , nivel , nivelAnt   ) ;
     //
 
-    imprimirpornivel ( arbol ) ;
+    // imprimirpornivel ( arbol ) ;
 
 
     // buscar
@@ -434,7 +424,7 @@ begin
       // Write         ( 'Ingrese el numero a buscar en el arbol: ' ) ;
       // ReadLn        ( aBuscar                                    ) ;
 
-      // nodo := buscar( arbol , ABuscar ) ;
+      // nodo := buscarNodo( arbol , ABuscar ) ;
 
       // separador( 1 ) ;
 
@@ -448,13 +438,10 @@ begin
     //
 
     // min max
-      // minAct := -1 ;
-      // maxAct := -1 ;
-
-      // separador ( 1                                                            ) ;
-      // WriteLn   ( 'El numero minimo del arbol es: ' , minimo( arbol , minAct ) ) ;
-      // separador ( 1                                                            ) ;
-      // WriteLn   ( 'El numero maximo del arbol es: ' , maximo( arbol , maxAct ) ) ;
+      separador ( 1                                                       ) ;
+      WriteLn   ( 'El valor minimo del arbol es: ' , valorMinimo( arbol ) ) ;
+      separador ( 1                                                       ) ;
+      WriteLn   ( 'El valor maximo del arbol es: ' , valorMaximo( arbol ) ) ;
     //
   //
 end.

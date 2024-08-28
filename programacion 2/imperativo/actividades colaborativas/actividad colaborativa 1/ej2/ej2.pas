@@ -168,7 +168,7 @@ type
         Write ( ' ' ) ;
       end ;
 
-      WriteLn ( arbol^.codigoDePasta , ' (' , arbol^.cantidad , ')' ) ;
+      WriteLn ( arbol^.codigoDePasta , ' (' , arbol^.cantidad , ' kg)' ) ;
       
       for i := 1 to (espacio - 1) do
       begin
@@ -180,8 +180,8 @@ type
       nivel    := ( nivel    + 1 ) ;
       nivelAnt := ( nivelAnt + 1 ) ;
 
-      graficarArbol( arbol^.hijoIzq, (ESPACIO - (nivel * 4)) , nivel , nivelAnt ) ;
-      graficarArbol( arbol^.hijoDer, (ESPACIO + (nivel * 4)) , nivel , nivelAnt ) ;
+      graficarArbol( arbol^.hijoIzq, (ESPACIO - 5) , nivel , nivelAnt ) ;
+      graficarArbol( arbol^.hijoDer, (ESPACIO + 5) , nivel , nivelAnt ) ;
     end ;
   end ;
 //
@@ -277,13 +277,10 @@ type
 // procedure generarEstructuras ( var L : TLista ; var arbol : TArbol ) ;
     procedure generarEstructuras ( var L : TLista ; var arbol : TArbol ) ;
     var
-        fin           : Boolean ;
-        venta         : TVenta  ;
-        numeroDeVenta : Integer ;
+        fin   : Boolean ;
+        venta : TVenta  ;
 
     begin
-        numeroDeVenta := 1 ;
-
         separador ( 5              ) ;
         WriteLn   ( 'Leer Ventas:' ) ;
 
@@ -296,7 +293,6 @@ type
             begin
                 agregarALista ( L     , venta ) ;
                 agregarAArbol ( arbol , venta ) ;
-                incrementar   ( numeroDeVenta ) ;
             end ;
         until( fin ) ;
     end ;

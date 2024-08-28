@@ -1,9 +1,12 @@
 Program arboles ;
+const
+  ESPACIO = 50 ;
+  
 Type
   TArbol = ^TNodo ;
 
   TNodo = Record
-    numero  : integer ;
+    numero  : Integer ;
     hijoIzq : TArbol  ;
     hijoDer : TArbol  ;
   End ;
@@ -160,71 +163,155 @@ Type
   end ;
 //
 
-// function buscar ( arbol : TArbol ; numero : Integer ) : TArbol ;
-  function buscar ( arbol : TArbol ; numero : Integer )  : TArbol ;
+// function buscarNodo ( arbol : TArbol ; numero : Integer ) : TArbol ;
+  function buscarNodo ( arbol : TArbol ; numero : Integer )  : TArbol ;
   begin
     if ( arbol <> Nil ) then
     begin
       if ( numero = arbol^.numero ) then
       begin
-        buscar := arbol ;
+        buscarNodo := arbol ;
       end
       else if ( numero < arbol^.numero) then
       begin
-        buscar := buscar( arbol^.hijoIzq , numero ) ;
+        buscarNodo := buscarNodo( arbol^.hijoIzq , numero ) ;
       end else
       begin
-        buscar := buscar( arbol^.hijoDer , numero ) ;
+        buscarNodo := buscarNodo( arbol^.hijoDer , numero ) ;
       end ;
     end else
     begin
-      buscar := Nil ;
+      buscarNodo := Nil ;
     end ;
   end ;
 //
 
-// function minimo ( arbol : TArbol ; minAct : Integer ) : Integer ;
-  function minimo ( arbol : TArbol ; minAct : Integer ) : Integer ;
+// function valorMinimo ( arbol : TArbol ) : Integer ;
+  function valorMinimo ( arbol : TArbol ) : Integer ;
   begin
     if ( arbol <> Nil ) then
     begin
-      if ( (arbol^.numero < minAct) or (minAct = -1) ) then
+      if ( arbol^.hijoIzq <> Nil ) then
       begin
-        minAct := arbol^.numero ;
+        valorMinimo := valorMinimo( arbol^.hijoIzq ) ;
+      end else
+      begin
+        valorMinimo := arbol^.numero ;
       end ;
-
-      minimo := minimo( arbol^.hijoIzq , minAct ) ;
-    end
-    else begin
-      minimo := minAct ;
     end ;
   end ; 
 //
 
-// function maximo ( arbol : TArbol ; maxAct : Integer ) : Integer ;
-  function maximo ( arbol : TArbol ; maxAct : Integer ) : Integer ;
+// function valorMaximo ( arbol : TArbol ) : Integer ;
+  function valorMaximo ( arbol : TArbol ) : Integer ;
   begin
     if ( arbol <> Nil ) then
     begin
-      if ( maxAct < arbol^.numero ) then
+      if ( arbol^.hijoDer <> Nil ) then
       begin
-        maxAct := arbol^.numero ;
+        valorMaximo := valorMaximo( arbol^.hijoDer ) ;
+      end else
+      begin
+        valorMaximo := arbol^.numero ;
       end ;
-
-      maximo := maximo( arbol^.hijoDer , maxAct ) ;
-    end
-    else begin
-      maximo := maxAct ;
     end ;
   end ; 
+//
+
+// procedure imprimirAcotado ( arbol : TArbol ; inf : Integer ; sup : Integer ) ;
+  procedure imprimirAcotado ( arbol : TArbol ; inf : Integer ; sup : Integer ) ;
+  begin
+    if ( arbol <> Nil ) then
+    begin
+      if ( (inf <= arbol^.numero) and (arbol^.numero <= sup) ) then
+      begin
+        Write           ( arbol^.numero , ' - '        ) ;
+        imprimirAcotado ( arbol^.hijoIzq , inf , sup   ) ;
+        imprimirAcotado ( arbol^.hijoDer , inf , sup   ) ;
+      end
+      else if ( inf < arbol^.numero ) then
+      begin
+        imprimirAcotado ( arbol^.hijoIzq , inf , sup ) ;
+      end else
+      begin
+        imprimirAcotado ( arbol^.hijoDer , inf , sup ) ;
+      end;
+    end ;
+  end ;
+//
+
+// function nodoMin ( arbol : TArbol ) : TArbol ;
+  function nodoMin ( arbol : TArbol ) : TArbol ;
+  begin
+    if ( arbol^.hijoDer = Nil ) then
+    begin
+      nodoMin := arbol ;
+    end
+    else
+    begin
+      nodoMin := nodoMin( arbol^.hijoDer ) ;
+    end ;
+  end ;
+//
+
+// function nodoMax ( arbol : TArbol ) : TArbol ;
+  function nodoMax ( arbol : TArbol ) : TArbol ;
+  begin
+    if ( arbol^.hijoDer = Nil ) then
+    begin
+      nodoMax := arbol ;
+    end
+    else
+    begin
+      nodoMax := nodoMax( arbol^.hijoDer ) ;
+    end ;
+  end ;
+//
+
+//  procedure eliminar ( var arbol : TArbol ; numero : Integer ) ;
+  procedure eliminar ( var arbol : TArbol ; numero : Integer ) ;
+  var
+    aux : TArbol ;
+
+  begin
+    if ( arbol <> Nil ) then
+    begin
+      if ( numero = arbol^.numero ) then
+      begin
+        aux := arbol ;
+
+        if ( arbol^.hijoIzq = Nil ) then
+        begin
+          arbol := arbol^.hijoDer ;
+        end
+        else if ( arbol^.hijoDer = Nil ) then
+        begin
+          arbol := arbol^.hijoIzq ;
+        end
+        else
+        begin
+          nodoMax( arbol^.hijoIzq )^.hijoDer := arbol^.hijoDer ;
+          arbol                              := arbol^.hijoIzq ;
+        end ;
+
+        Dispose( aux ) ;
+      end
+      else if ( numero < arbol^.numero ) then
+      begin
+        eliminar( arbol^.hijoIzq , numero ) ;
+      end
+      else
+      begin
+        eliminar( arbol^.hijoDer , numero ) ;
+      end ;
+    end ;
+  end ;
 //
 
 Var
   arbol    : TArbol  ;
 
-  // graficar (BOLUDES MIA)
-    espacio  : Integer ;
-    nivel    : Integer ;
+  // graficar
     nivelAnt : Integer ;
   //
 
@@ -236,6 +323,15 @@ Var
   // min max
     minAct   : Integer ;
     maxAct   : Integer ;
+  //
+
+  // imprimir acotado
+    inf : Integer ;
+    sup : Integer ;
+  //
+
+  // borrar
+    aBorrar : Integer ;
   //
 
 begin
@@ -256,14 +352,12 @@ begin
   //
 
   // graficar (BOLUDES MIA)
-    espacio  := 30 ;
-    nivel    := 0  ;
     nivelAnt := -1 ;
 
     separador     ( 1                                    ) ;
     WriteLn       ( 'Representacion grafica del arbol: ' ) ;
     separador     ( 1                                    ) ;
-    graficarArbol ( arbol , espacio , nivel , nivelAnt   ) ;
+    graficarArbol ( arbol , ESPACIO , 0 , nivelAnt       ) ;
   //
 
   // buscar
@@ -271,7 +365,7 @@ begin
     Write         ( 'Ingrese el numero a buscar en el arbol: ' ) ;
     ReadLn        ( aBuscar                                    ) ;
 
-    nodo := buscar( arbol , ABuscar ) ;
+    nodo := buscarNodo( arbol , ABuscar ) ;
 
     separador( 1 ) ;
 
@@ -285,12 +379,38 @@ begin
   //
 
   // min max
-    minAct := -1 ;
-    maxAct := -1 ;
+    separador ( 1                                                        ) ;
+    WriteLn   ( 'El numero minimo del arbol es: ' , valorMinimo( arbol ) ) ;
+    separador ( 1                                                        ) ;
+    WriteLn   ( 'El numero maximo del arbol es: ' , valorMaximo( arbol ) ) ;
+  //
 
-    separador ( 1                                                            ) ;
-    WriteLn   ( 'El numero minimo del arbol es: ' , minimo( arbol , minAct ) ) ;
-    separador ( 1                                                            ) ;
-    WriteLn   ( 'El numero maximo del arbol es: ' , maximo( arbol , maxAct ) ) ;
+  // imprimir acotado
+    separador       ( 1                                  ) ;
+    WriteLn         ( 'Imprimir acotado:'                ) ;
+    Write           ( '    Minimo: '                     ) ;
+    ReadLn          ( inf                                ) ;
+    Write           ( '    Maximo: '                     ) ;
+    ReadLn          ( sup                                ) ;
+    separador       ( 1                                  ) ;
+    WriteLn         ( 'Entre ' , inf , ' y ' , sup , ':' ) ;
+    imprimirAcotado ( arbol , inf , sup                  ) ;
+  //
+
+  // borrar
+    repeat
+      separador     ( 1                                          ) ;
+      Write         ( 'Ingrese el numero a borrar en el arbol: ' ) ;
+      ReadLn        ( aBorrar                                    ) ;
+
+      eliminar( arbol , aBorrar ) ;
+
+      nivelAnt := -1 ;
+
+      separador     ( 1                                    ) ;
+      WriteLn       ( 'Representacion grafica del arbol: ' ) ;
+      separador     ( 1                                    ) ;
+      graficarArbol ( arbol , ESPACIO , 0 , nivelAnt       ) ;
+    until ( aBorrar = 0 ) ;
   //
 end.
