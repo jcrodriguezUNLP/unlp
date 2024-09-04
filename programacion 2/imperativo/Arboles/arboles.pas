@@ -229,7 +229,7 @@ Type
         imprimirAcotado ( arbol^.hijoIzq , inf , sup   ) ;
         imprimirAcotado ( arbol^.hijoDer , inf , sup   ) ;
       end
-      else if ( inf < arbol^.numero ) then
+      else if ( sup < arbol^.numero ) then
       begin
         imprimirAcotado ( arbol^.hijoIzq , inf , sup ) ;
       end else
@@ -305,6 +305,32 @@ Type
         eliminar( arbol^.hijoDer , numero ) ;
       end ;
     end ;
+  end ;
+//
+
+// function informarAcotado ( arbol : TArbol ; inf : Integer ; sup : Integer ; cantAct : Integer ) : Integer ;
+  function informarAcotado ( arbol : TArbol ; inf : Integer ; sup : Integer ; cantAct : Integer ) : Integer ;
+  begin
+      if ( arbol <> Nil ) then
+      begin
+          if ( (inf <= arbol^.ciudad.codPostal) and (arbol^.ciudad.codPostal <= sup) ) then
+          begin
+              sumar( cantAct , arbol^.cantInfectados ) ;
+
+              cantAct := informarAcotado( arbol^.hijoIzq , inf , sup , cantAct ) ;
+              cantAct := informarAcotado( arbol^.hijoDer , inf , sup , cantAct ) ;
+          end
+          else if ( arbol^.ciudad.codPostal < inf ) then
+          begin
+              cantAct := informarAcotado( arbol^.hijoDer , inf , sup , cantAct ) ;
+          end else
+          begin
+              cantAct := informarAcotado( arbol^.hijoIzq , inf , sup , cantAct ) ;
+          end ;
+      end else
+      begin
+          informarAcotado := cantAct ;
+      end ;
   end ;
 //
 

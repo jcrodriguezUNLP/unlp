@@ -360,6 +360,82 @@ Type
       end ;
     end ; 
   //
+
+  // procedure imprimirAcotado ( arbol : TArbol ; inf : Integer ; sup : Integer ) ;
+    procedure imprimirAcotado ( arbol : TArbol ; inf : Integer ; sup : Integer ) ;
+    begin
+      if ( arbol <> Nil ) then
+      begin
+        if ( (inf <= arbol^.numero) and (arbol^.numero <= sup) ) then
+        begin
+          Write           ( arbol^.numero , ' - '        ) ;
+          imprimirAcotado ( arbol^.hijoIzq , inf , sup   ) ;
+          imprimirAcotado ( arbol^.hijoDer , inf , sup   ) ;
+        end
+        else if ( sup < arbol^.numero ) then
+        begin
+          imprimirAcotado ( arbol^.hijoIzq , inf , sup ) ;
+        end else
+        begin
+          imprimirAcotado ( arbol^.hijoDer , inf , sup ) ;
+        end;
+      end ;
+    end ;
+  //
+
+  // function nodoMax ( arbol : TArbol ) : TArbol ;
+    function nodoMax ( arbol : TArbol ) : TArbol ;
+    begin
+      if ( arbol^.hijoDer = Nil ) then
+      begin
+        nodoMax := arbol ;
+      end
+      else
+      begin
+        nodoMax := nodoMax( arbol^.hijoDer ) ;
+      end ;
+    end ;
+  //
+
+  //  procedure eliminar ( var arbol : TArbol ; numero : Integer ) ;
+    procedure eliminar ( var arbol : TArbol ; numero : Integer ) ;
+    var
+      aux : TArbol ;
+
+    begin
+      if ( arbol <> Nil ) then
+      begin
+        if ( numero = arbol^.numero ) then
+        begin
+          aux := arbol ;
+
+          if ( arbol^.hijoIzq = Nil ) then
+          begin
+            arbol := arbol^.hijoDer ;
+          end
+          else if ( arbol^.hijoDer = Nil ) then
+          begin
+            arbol := arbol^.hijoIzq ;
+          end
+          else
+          begin
+            nodoMax( arbol^.hijoIzq )^.hijoDer := arbol^.hijoDer ;
+            arbol                              := arbol^.hijoIzq ;
+          end ;
+
+          Dispose( aux ) ;
+        end
+        else if ( numero < arbol^.numero ) then
+        begin
+          eliminar( arbol^.hijoIzq , numero ) ;
+        end
+        else
+        begin
+          eliminar( arbol^.hijoDer , numero ) ;
+        end ;
+      end ;
+    end ;
+  //
 //
 
 Var
@@ -377,6 +453,15 @@ Var
     // buscar
       aBuscar  : Integer ;
       nodo     : TArbol  ;
+    //
+
+    //
+      inf : Integer ;
+      sup : Integer ;
+    //
+
+    //
+      aBorrar : Integer ;
     //
   //
 

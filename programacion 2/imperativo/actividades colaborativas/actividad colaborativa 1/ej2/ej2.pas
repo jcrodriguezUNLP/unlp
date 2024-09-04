@@ -15,10 +15,10 @@ type
     end ;
 
     TVenta = record
+        numeroDeCliente : Integer ;
         codigoDePasta   : Integer ;
         cantidad        : Integer ;
         fecha           : TFecha  ;
-        numeroDeCliente : Integer ;
     end ;
 
     TLista = ^TNodoLista ;

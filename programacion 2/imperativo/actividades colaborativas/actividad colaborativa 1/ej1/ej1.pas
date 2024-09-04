@@ -1,20 +1,21 @@
 program ej1 ;
 const
     FIN_VENTA = 'ZZZ' ;
+    ESPACIO   = 50    ;
 
 type
     TVenta = record
         nombre    : string  ;
         distancia : real    ;
-        cant      : integer ;
+        cantidad  : integer ;
     end ;
 
-    TArbol = ^nodoar ;
+    TArbol = ^TNodoArbol ;
 
-    nodoar = record
-      venta : Tventa ;
-      HijoD : TArbol ;
-      HijoI : TArbol ;
+    TNodoArbol = record
+      venta   : Tventa ;
+      HijoIzq : TArbol ;
+      HijoDer : TArbol ;
     end ;
 
 // procedure separador ( n : Integer ) ;
@@ -33,47 +34,52 @@ type
 // procedure leerVenta ( var venta : TVenta ) ;
     procedure leerVenta ( var venta : TVenta ) ;
     begin
-        separador ( 1                                                          ) ;
-        Write     ( '    Destino ( ingrese "ZZZ" para terminar ): ' ) ;
-        ReadLn    ( venta.nombre                                      ) ;
-
-        if ( venta.nombre <> FIN_VENTA ) then
+        separador ( 1 ) ;
+        
+        with venta do
         begin
-            Write  ( '    Distancia: ' ) ;
-            ReadLn ( venta.distancia     ) ;
-            
-            Write  ( '    Cantidad: '   ) ;
-            ReadLn ( venta.cant     ) ;
+            Write  ( '    Destino ( ingrese "ZZZ" para terminar ) : ' ) ;
+            ReadLn ( nombre                                          ) ;
+
+            if ( nombre <> FIN_VENTA ) then
+            begin
+                Write  ( '    Distancia: ' ) ;
+                ReadLn ( distancia         ) ;
+                
+                Write  ( '    Cantidad: '   ) ;
+                ReadLn ( cantidad           ) ;
+            end ;
         end ;
     end ;
 //
 
-// procedure GenerarArbolR(var ar : TArbol; V : TVenta ) ;
-    procedure GenerarArbolR(var ar : TArbol; V : TVenta ) ;
+// procedure GenerarArbol ( var arbol : TArbol ; venta : TVenta ) ;
+    procedure GenerarArbol ( var arbol : TArbol ; venta : TVenta ) ;
     var 
-        nue : TArbol;
+        nue : TArbol ;
+
     begin
-        If ( (ar = nil) and (v.nombre <> FIN_VENTA) ) then
+        if ( (arbol = Nil) and (venta.nombre <> FIN_VENTA) ) then
         begin
-            new(nue ) ;
+            New( nue ) ;
 
-            nue^.venta:= V;
-            nue^.HijoD:= nil;
-            nue^.HijoI:= nil;
+            nue^.venta   := venta ;
+            nue^.HijoDer := Nil   ;
+            nue^.HijoIzq := Nil   ;
 
-            ar := nue ;
+            arbol := nue ;
 
-            leerVenta( v ) ;
+            leerVenta( venta ) ;
         end ;
 
-        if ( v.nombre <> FIN_VENTA ) then
+        if ( venta.nombre <> FIN_VENTA ) then
         begin
-            if (ar^.venta.nombre > V.nombre) then
+            if ( arbol^.venta.nombre > Venta.nombre ) then
             begin
-                GenerarArbolR(ar^.HijoI , v  ) ;
+                GenerarArbol( arbol^.HijoIzq , venta ) ;
             end else
             begin
-                GenerarArbolR(ar^.HijoD , v  ) ;
+                GenerarArbol( arbol^.HijoDer , venta ) ;
             end ;
         end ;
     end ;
@@ -85,7 +91,7 @@ type
     i : Integer ;
 
   begin
-    if (arbol <> Nil) then
+    if ( arbol <> Nil ) then
     begin
       if ( nivel <= nivelAnt ) then
       begin
@@ -130,53 +136,40 @@ type
       nivel    := ( nivel    + 1 ) ;
       nivelAnt := ( nivelAnt + 1 ) ;
 
-      graficarArbol( arbol^.hijoI, (ESPACIO - (nivel * 4)) , nivel , nivelAnt ) ;
-      graficarArbol( arbol^.hijoD, (ESPACIO + (nivel * 4)) , nivel , nivelAnt ) ;
+      graficarArbol( arbol^.hijoIzq , (ESPACIO - (nivel * 4)) , nivel , nivelAnt ) ;
+      graficarArbol( arbol^.hijoDer , (ESPACIO + (nivel * 4)) , nivel , nivelAnt ) ;
     end ;
   end ;
 //
 
-// procedure inicializarEstructura (var ar: TArbol ) ;
-    procedure inicializarEstructura (var ar: TArbol ) ;
+// procedure inicializarEstructura ( var arbol : TArbol ) ;
+    procedure inicializarEstructura ( var arbol : TArbol ) ;
     begin 
-        ar:= nil;
+        arbol := Nil ;
     end ;
 //
 
-// function minDistNodo (ar:TArbol ; var minAct : TVenta ): TArbol;
-    // function minDistNodo (ar:TArbol ; var minAct : Tventa ): TArbol;
-    // begin
-    //     if (ar <> nil) then 
-    //     begin
-    //         if ( ar^.venta.distancia < minAct.distancia ) then
-    //         begin
-    //           minAct := ar^.venta;
-    //         end else
-    //         begin
-    //             minDistNodo(ar^.HijoI,minAct ) ;
-    //             minDistNodo(ar^.HijoD,minAct ) ;
-    //         end ;
-    //     end else
-    //     begin
-    //         minDistNodo:= minAct;
-    //     end ;
-    // end ;
-//
-
-// function BuscarDestino (ar:TArbol ; destino:string): Tventa;
-    // function Buscardestino (ar:TArbol ; destino:string): Tventa;
-    // begin
-    //     if (ar <> nil) then 
-    //     begin
-    //         if (ar^.venta.destino = destino) then
-    //         BuscarDestino:= ar^.destino
-    //         else begin
-    //             if (ar^.destino > destino) 
-    //             then buscardestino(ar^.HijoI,destino)
-    //             else buscardestino(ar^.HijoD, destino ) ;
-    //         end ;
-    //     end ;
-    // end ;
+// function BuscarDestino ( arbol : TArbol ; destino : string ) : TArbol ;
+    function Buscardestino ( arbol : TArbol ; destino : string ) : TArbol ;
+    begin
+        if ( arbol <> Nil ) then 
+        begin
+            if ( arbol^.venta.nombre = destino ) then
+            begin
+                BuscarDestino := arbol ;
+            end
+            else if ( destino < arbol^.venta.nombre ) then
+            Begin
+                Buscardestino := buscardestino( arbol^.HijoIzq , destino ) ;
+            end else
+            begin
+                Buscardestino := buscardestino( arbol^.HijoDer , destino ) ;
+            end ;
+        end else
+        begin
+            Buscardestino := Nil ;
+        end ;
+    end ;
 //
 
 // function minDistNodo ( arbol : TArbol ; minDistAct : TArbol ) : TArbol ;
@@ -189,95 +182,114 @@ type
                 minDistAct := arbol ;
             end ;
             
-            minDistAct := minDistNodo( arbol^.HijoI , minDistAct ) ; 
-            minDistAct := minDistNodo( arbol^.HijoD , minDistAct ) ;
+            minDistAct := minDistNodo( arbol^.HijoIzq , minDistAct ) ; 
+            minDistAct := minDistNodo( arbol^.HijoDer , minDistAct ) ;
         end ;
 
         minDistNodo := minDistAct ;
     end ;
 //
 
-// procedure menu ( var arbol : TArbol ) ;
-    procedure menu ( var arbol : TArbol ) ;
+// procedure menu ( var opcion : Integer ; var arbol : TArbol ) ;
+    procedure menu ( var opcion : Integer ; var arbol : TArbol ) ;
     var
-        venta    : Tventa  ;
-        nivel    : Integer ;
-        nivelAnt : Integer ;
-        espacio  : Integer ;
-        opcion   : Integer ;
-        destino  : string  ;
-        minDist  : TArbol  ;
+        venta           : TVenta  ;
+        destino         : TArbol  ;
+        minDist         : TArbol  ;
+        nivelAnt        : Integer ;
+        destinoABuscar  : string  ;
 
     begin
-        repeat
-            separador(2 ) ;
-            WriteLn('Que desea hacer: ' ) ;
-            WriteLn('    1. Inicizalizar estructuras' ) ;
-            WriteLn('    2. Cargar destinos' ) ;
-            WriteLn('    3. Imprimir estructura' ) ;
-            WriteLn('    4. Buscar destino(mostar datos)' ) ;
-            WriteLn('    5. destino mas cercano' ) ;
-            WriteLn('    6. sumar pasajes'     ) ;
-            separador(1 ) ;
-            WriteLn('    0. Finalizar programa' ) ;
-            separador(1 ) ;
-            Write('Opcion: ' ) ;
-            ReadLn(opcion ) ;
+        separador ( 2                                     ) ;
+        WriteLn   ( 'Que desea hacer: '                   ) ;
+        WriteLn   ( '    1. Inicizalizar estructuras'     ) ;
+        WriteLn   ( '    2. Cargar destinos'              ) ;
+        WriteLn   ( '    3. Imprimir estructura'          ) ;
+        WriteLn   ( '    4. Buscar destino(mostar datos)' ) ;
+        WriteLn   ( '    5. destino mas cercano'          ) ;
+        separador ( 1                                     ) ;
+        WriteLn   ( '    0. Finalizar programa'           ) ;
+        separador ( 1                                     ) ;
+        Write     ( 'Opcion: '                            ) ;
+        ReadLn    ( opcion                                ) ;
 
-            if ( opcion <> 0) then
-            begin          
-                case opcion of
-                    1: begin
-                        inicializarEstructura(arbol ) ;
+        if ( opcion <> 0) then
+        begin          
+            case opcion of
+                1:
+                    begin
+                        inicializarEstructura( arbol ) ;
                     end ;
-                    2: begin
-                            leerVenta(venta ) ;
-                            GenerarArbolR(arbol,venta ) ;
+                2:
+                    begin
+                        leerVenta    ( venta       ) ;
+                        GenerarArbol ( arbol,venta ) ;
                     end ;
-                    3: begin
-                            nivel := 0 ;
-                            nivelAnt := -1 ;
-                            espacio := 50 ;
-                            graficarArbol(arbol, espacio, nivel, nivelAnt) ;
-                    end ; 
-                    4: begin
-                            // Writeln('ingresar destino a buscar' ) ;
-                            // ReadLn(destino ) ;
-                            // Venta := BuscarDestino(arbol,destino ) ;
-                            // WriteLn('el destino ', venta.nombre, 'tiene', venta.cant , 'pasajes, y esta a', venta.distancia, 'km' ) ;
-                    end ;
-                    5: begin
-                        separador( 1 ) ;
-                        minDist := Nil ;
+                3:
+                    begin
+                        nivelAnt := -1 ;
                         
-                        minDist := minDistNodo( arbol , minDist ) ;
+                        graficarArbol( arbol , ESPACIO , 0 , nivelAnt ) ;
+                    end ; 
+                4:
+                    begin
+                        separador ( 1                             ) ;
+                        Write     ( 'ingresar destino a buscar: ' ) ;
+                        ReadLn    ( destinoABuscar                ) ;
 
-                        if minDist = Nil then
+                        destino := BuscarDestino( arbol , destinoABuscar ) ;
+                        
+                        separador ( 1 ) ;
+
+                        if ( destino = Nil ) then
                         begin
-                            WriteLn ( 'lista vacia' ) ;
+                            WriteLn ( 'Destino no encontrado' ) ;
                         end else
                         begin
-                            WriteLn ( 'El destino con menor distancia es: ' ) ;
+                            WriteLn ( 'Datos del destino: ' ) ;
 
-                            with (minDist^) do
+                            with (destino^.venta) do
                             begin
-                                WriteLn( '    nombre:'     , venta.nombre        ) ;
-                                WriteLn( '    distancia: ' , venta.distancia:2:2 ) ;
-                                WriteLn( '    cantidad:'   , venta.cant          ) ;
+                                WriteLn( '    nombre: '    , nombre        ) ;
+                                WriteLn( '    distancia: ' , distancia:2:2 ) ;
+                                WriteLn( '    cantidad: '  , cantidad      ) ;
                             end ;
-                        end;
+                        end ;
+                    end ;
+                5:
+                begin
+                    separador( 1 ) ;
+                    
+                    minDist := minDistNodo( arbol , Nil ) ;
+
+                    if ( minDist = Nil ) then
+                    begin
+                        WriteLn ( 'lista vacia' ) ;
+                    end else
+                    begin
+                        WriteLn ( 'El destino con menor distancia es: ' ) ;
+
+                        with (minDist^.venta) do
+                        begin
+                            WriteLn( '    nombre: '    , nombre        ) ;
+                            WriteLn( '    distancia: ' , distancia:2:2 ) ;
+                            WriteLn( '    cantidad: '  , cantidad      ) ;
+                        end ;
                     end ;
                 end ;
             end ;
-        until ( opcion = 0) ;
+        end ;
     end ;
 //
 
 var
-    arbol : TArbol ;
+    arbol  : TArbol  ;
+    opcion : Integer ;
 
 begin
     arbol := Nil ;
     
-    menu( arbol ) ;
+    repeat
+        menu( opcion , arbol ) ;
+    until( opcion = 0 ) ;
 end.
