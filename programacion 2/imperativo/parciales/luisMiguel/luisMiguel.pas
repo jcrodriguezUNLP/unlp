@@ -1,6 +1,6 @@
 Program luisMiguel ;
 Type
-     TCadena70 = string[ 70 ] ;
+    TCadena70 = string[ 70 ] ;
      
     TPersona = record
         DNI             : longint   ;
@@ -10,9 +10,9 @@ Type
     end ;
 
 	TFecha =record
-		dia:1..31;
-		mes:1..12;
-		anio:integer;
+		dia  : 1..31   ;
+		mes  : 1..12   ;
+		anio : integer ;
 	end ;
 	
     TEntrada = record
@@ -72,6 +72,14 @@ Type
 
     TMinimos = array [ 1..2 ] of TEntradaArbol ;
 
+    TVectorPlateas = array [ 'A'..'K' ] of Integer ;
+
+    TVip = record
+        nombre_apellido : TCadena70      ;
+        plateas         : TVectorPlateas ;
+        totalGastado    : Real           ;
+    end ;
+
 // creado por mi
     // procedure separador ( n : Integer ) ;
         procedure separador ( n : Integer ) ;
@@ -95,6 +103,13 @@ Type
 
     // procedure sumar ( var a : Integer ; b : Integer ) ;
         procedure sumar ( var a : Integer ; b : Integer ) ;
+        begin
+            a := ( a + b ) ;
+        end ;
+    //
+    
+    // procedure sumarReal ( var a : Real ; b : Real ) ;
+        procedure sumarReal ( var a : Real ; b : Real ) ;
         begin
             a := ( a + b ) ;
         end ;
@@ -200,7 +215,8 @@ Type
         
         with( persona ) do
         begin
-            DNI := ( random(18000000) + 20000000 ) ;
+            // DNI := ( random(18000000) + 20000000 ) ;
+            DNI := ( random( 4 ) ) ;
 
             pos := ( random(20) + 1 ) ;
 
@@ -545,34 +561,284 @@ Type
             end ;
         end ;
     //
+
+    // function cantEntradasQueCumplen ( LEA : TListaEntradasArbol ; cantEntradas : Integer ) : Integer ;
+        function cantEntradasQueCumplen ( LEA : TListaEntradasArbol ; cantEntradas : Integer ) : Integer ;
+        begin
+            if ( LEA <> Nil ) then
+            begin
+                if ( (LEA^.entrada.pago = 'Efectivo') and (5 <= LEA^.entrada.fila) and (LEA^.entrada.fila <= 10) ) then
+                begin
+                    incrementar( cantEntradas ) ;
+                end ; 
+
+                cantEntradasQueCumplen := cantEntradasQueCumplen( LEA^.sig , cantEntradas ) ;
+            end else
+            begin
+                cantEntradasQueCumplen := cantEntradas ;
+            end ;
+        end ;
+    //
+
+    // procedure informarAcotado ( arbol : TArbol ; inf : LongInt ; sup : LongInt ) ;
+        procedure informarAcotado ( arbol : TArbol ; inf : LongInt ; sup : LongInt ) ;
+        begin
+            if ( arbol <> Nil ) then
+            begin
+                if ( (inf <= arbol^.persona.DNI ) and (arbol^.persona.DNI <= sup) ) then
+                begin
+                    separador ( 1                                                                    ) ;
+                    WriteLn   ( 'DNI               ' , arbol^.persona.DNI                            ) ;
+                    WriteLn   ( 'Correo            ' , arbol^.persona.correo                         ) ;
+                    WriteLn   ( 'Cant de entradas  ' , cantEntradasQueCumplen( arbol^.entradas , 0 ) ) ;
+
+                    informarAcotado( arbol^.hijoIzq , inf , sup ) ;
+                    informarAcotado( arbol^.hijoDer , inf , sup ) ;
+                end
+                else if ( arbol^.persona.DNI < inf ) then
+                begin
+                    informarAcotado( arbol^.hijoDer , inf , sup ) ;
+                end else
+                begin
+                    informarAcotado( arbol^.hijoIzq , inf , sup ) ;
+                end ;
+            end ;
+        end ;
+    //
+
+    // procedure inicializarVip ( var vip : TVip ; NyA : TCadena70 ) ;
+        procedure inicializarVip ( var vip : TVip ; NyA : TCadena70 ) ;
+        var
+            i : char ;
+
+        begin
+            vip.nombre_apellido := NyA ;
+
+            for i := 'A' to 'K' do
+            begin
+                vip.plateas[ i ] := 0 ;
+            end ;
+
+            vip.totalGastado := 0 ;
+        end ;
+
+    //
+
+    // function metodoDePago ( LEA : TListaEntradasArbol ) : Boolean ;
+        function metodoDePago ( LEA : TListaEntradasArbol ) : Boolean ;
+        begin
+            if ( LEA <> Nil ) then
+            begin
+                if ( LEA^.entrada.pago = 'Tarjeta de Credito' ) then
+                begin
+                    metodoDePago := True ;
+                end else
+                begin
+                    metodoDePago := metodoDePago( LEA^.sig ) ;
+                end ;
+            end else
+            begin
+                metodoDePago := False ;
+            end ; 
+        end ;
+    //
+
+    // procedure compararVip ( var vip : TVip ; aux : TVip ) ;
+        procedure compararVip ( var vip : TVip ; aux : TVip ) ;
+        var
+            i      : char    ;
+            maxVip : Integer ;
+            maxAux : Integer ;
+
+        begin
+            maxVip := 0 ;
+            maxAux := 0 ;
+
+            for i := 'A' to 'K' do
+            begin
+                if ( maxVip < vip.plateas[ i ] ) then
+                begin
+                    maxVip := vip.plateas[ i ] ;
+                end ;
+                
+                if ( maxAux < aux.plateas[ i ] ) then
+                begin
+                    maxAux := aux.plateas[ i ] ;
+                end ;
+            end ;
+
+            if ( maxVip < maxAux ) then
+            begin
+                vip := aux ;
+            end ;
+        end ;
+    //
+
+    // procedure actualizarVip ( LEA : TListaEntradasArbol ; var vip : TVip ) ;
+        procedure actualizarVip ( LEA : TListaEntradasArbol ; var vip : TVip ) ;
+        begin
+            if ( LEA <> Nil ) then
+            begin
+                incrementar   ( vip.plateas[ LEA^.entrada.platea ]     ) ;
+                sumarReal     ( vip.totalGastado , LEA^.entrada.precio ) ;
+                actualizarVip ( LEA^.sig         , vip                 ) ;
+            end ;
+        end ;
+    //
+
+    // procedure calcularVip ( arbol : TArbol ; var vip : TVip ) ;
+        procedure calcularVip ( arbol : TArbol ; var vip : TVip ) ;
+        var
+            vipAux : TVip ;
+
+        begin
+            if ( arbol <> Nil ) then
+            begin
+                if ( metodoDePago( arbol^.entradas ) ) then
+                begin
+                    inicializarVip ( vipAux          , arbol^.persona.nombre_apellido ) ;
+                    actualizarVip  ( arbol^.entradas , vipAux                         ) ;
+                    compararVip    ( vip             , vipAux                         ) ;
+                end ;
+
+                calcularVip( arbol^.hijoIzq , vip ) ;
+                calcularVip( arbol^.hijoDer , vip ) ;
+            end ;
+        end ;
+    //
+
+    // procedure imprimirVip ( arbol : TArbol ) ;
+        procedure imprimirVip ( arbol : TArbol ) ;
+        var
+            vip : TVip ;
+        
+        begin
+            inicializarVip ( vip   , arbol^.persona.nombre_apellido ) ;
+            calcularVip    ( arbol , vip                            ) ;
+
+            WriteLn( 'VIP:'                              ) ;
+            WriteLn( '    Nombre  ' , vip.nombre_apellido  ) ;
+            WriteLn( '    Total   ' , vip.totalGastado:2:2 ) ;
+        end ;
+    //
+
+    // procedure menu ( var opcion : Integer ; var arbol : TArbol ; LE : TListaEntradas ) ;
+        procedure menu ( var opcion : Integer ; var arbol : TArbol ; LE : TListaEntradas ) ;
+        var
+            nivelAnt : Integer ;
+            repetir  : Boolean ;
+
+        begin
+            separador ( 3                               ) ;
+            WriteLn   ( 'Menu: '                        ) ;
+            WriteLn   ( '    1. Reiniciar estructuras'  ) ;
+            WriteLn   ( '    2. Generar Arbol'          ) ;
+            WriteLn   ( '    3. Imprimir arbol'         ) ;
+            WriteLn   ( '    4. Buscar acotado'         ) ;
+            WriteLn   ( '    5. Buscar 2 minimos '      ) ;
+            WriteLn   ( '    6. Informar VIPS '         ) ;
+            WriteLn   ( '    6. imprimir entradas '     ) ;
+            separador ( 1                               ) ;
+            WriteLn   ( '    0. Finalizar programa'     ) ;
+
+
+            repeat
+                separador ( 1          ) ;
+                Write     ( 'Opcion: ' ) ;
+                ReadLn    ( opcion     ) ;
+
+                repetir := ( (opcion < 0) or (6 < opcion) ) ;
+
+                if ( repetir ) then
+                begin
+                    separador ( 1                 ) ;
+                    WriteLn   ( 'Numero invalido' ) ;
+                end ;
+            until( not repetir ) ;
+
+            separador( 3 ) ;
+
+            case opcion of
+                0:
+                    begin
+                        WriteLn( 'Programa Finalizado' ) ;
+                    end ;
+                1:
+                    begin
+                        WriteLn          ( 'Arbol inicializado' ) ;
+                        inicializarArbol ( arbol                ) ;
+                    end ;
+                2:
+                    begin
+                        generarArbol( arbol , LE ) ;
+                    end ;
+                3:
+                    begin
+                        if ( arbol <> Nil ) then
+                        begin
+                            nivelAnt := -1 ;
+                            graficarArbol( arbol , 90 , 0 , nivelAnt ) ;
+                        end else
+                        begin
+                            WriteLn( 'Arbol esta vacio' ) ;
+                        end ;
+                    end ;
+                4: 
+                    begin
+                        if ( arbol <> Nil ) then
+                        begin
+                            informarAcotado( arbol , 2 , 4 ) ;
+                        end else
+                        begin
+                            WriteLn( 'Arbol vacio' ) ;
+                        end ;
+                    end;
+                5:
+                    begin
+                        if ( arbol <> Nil ) then
+                        begin
+                            imprimirDosMasBaratas ( arbol ) ;
+                        end else
+                        begin
+                            WriteLn( 'Arbol vacio' ) ;
+                        end ;
+                    end ;
+                6:
+                    begin
+                        if ( arbol <> Nil ) then
+                        begin
+                            imprimirVip( arbol ) ;
+                        end else
+                        begin
+                            WriteLn( 'Arbol vacio' ) ;
+                        end ;
+                    end;
+            end ;
+        end ;
+    //
 //
 
 var
    LE : TListaEntradas ;
 
-   arbol    : TArbol  ;
-   nivelAnt : Integer ;
+   arbol  : TArbol  ;
+   opcion : Integer ;
 
 begin
     Randomize ;
 
     LE := Nil ;
 
-    crearTListaEntradas    ( LE                         ) ; {carga automatica de la estructura disponible}
-    writeln                ('TListaEntradas GENERADA: ' ) ;
-    imprimirTListaEntradas ( LE                         ) ;
+    crearTListaEntradas    ( LE                        ) ; {carga automatica de la estructura disponible}
+    writeln                ('ListaEntradas GENERADA: ' ) ;
+    imprimirTListaEntradas ( LE                        ) ;
 
     {Completar el programa}
 
-    nivelAnt := -1 ;
+    inicializarArbol( arbol ) ;
 
-    separador             ( 1                         ) ;
-    inicializarArbol      ( arbol                     ) ;
-    generarArbol          ( arbol , LE                ) ;
-    graficarArbol         ( arbol , 90 , 0 , nivelAnt ) ;
-    imprimirDosMasBaratas ( arbol                     ) ;
+    repeat
+        menu( opcion , arbol , LE ) ;
+    until( opcion = 0 ) ;
 
-    separador ( 1                  ) ;
-    writeln   ( 'Fin del programa' ) ;
-    ReadLn( );
 end.
