@@ -1,7 +1,7 @@
 Program luisMiguel ;
 Type
     TCadena70 = string[ 70 ] ;
-     
+   
     TPersona = record
         DNI             : longint   ;
         nombre_apellido : TCadena70 ;
@@ -24,7 +24,7 @@ Type
         platea     : 'A'..'K' ;
 		comprador  : TPersona ;
     end ;
-     
+   
     TListaEntradas = ^TNodoTListaEntradas ;
 
     TNodoTListaEntradas = record
@@ -687,7 +687,6 @@ Type
     //
 
     // procedure calcularVip ( arbol : TArbol ; var vip : TVip ) ;
-        procedure calcularVip ( arbol : TArbol ; var vip : TVip ) ;
         var
             vipAux : TVip ;
 
