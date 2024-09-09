@@ -9,13 +9,13 @@ Type
 	    nombre_apellido: str70;
         correo:str70;
 	    pago:str70;
-     end;
+     end ;
 
 	fecha=record
 		dia:1..31;
 		mes:1..12;
 		anio:integer;
-	end;
+	end ;
 	
     entrada= record
 		codigo: longint;
@@ -25,13 +25,13 @@ Type
 		fecha_show: fecha;
         platea: 'A'..'K';
 		comprador: persona;
-     end;
+     end ;
      
 	 lista = ^nodoLista;
      nodoLista = record
 	    dato: entrada;
 	    sig: lista;
-     end;
+     end ;
      
 	 nombres= array [1..20] of str70;
      plateas= array [1..11] of char;
@@ -58,7 +58,7 @@ begin
   f.dia:=v[pos];
   f.mes := 8;
   f.anio:=2023;
-end;
+end ;
 
 Procedure agregar(var l: lista; e: entrada);
 var
@@ -68,7 +68,7 @@ begin
      aux^.dato := e;
      aux^.sig := l;
      l:= aux;
-end;
+end ;
 
 procedure cargarComprador(var p: persona);
 var
@@ -117,7 +117,7 @@ begin
      v2[18]:='julian.darino@gmail.com';
      v2[19]:='victor.abila@gmail.com';
      v2[20]:='luciano.segura@gmail.com';
-	 {Método de pago}
+	 {Mï¿½todo de pago}
 	 v3[1]:='Tarjeta de Credito';
      v3[2]:='Tarjeta de Debito';
      v3[3]:='Efectivo';
@@ -128,8 +128,8 @@ begin
 	  nombre_apellido:= v[pos];
 	  correo:= v2[pos];
 	  pago:=v3[random(3)+1];
-   end;
-end;
+   end ;
+end ;
 
 procedure crearLista(var l: lista);
 var
@@ -160,7 +160,7 @@ begin
 			   precio:=random(75000)+10000;
 			   cargarFecha(fecha_show);
                cargarComprador(comprador);
-          end;
+          end ;
           agregar(l, e);
           repe:=random(3)+1;
           if(repe>2)then
@@ -175,20 +175,20 @@ begin
 			   platea:=v[pos];
 			   precio:=random (75000)+10000;
 			   cargarFecha(fecha_show);
-               end;
+               end ;
               agregar(l, e);
-          end;
-          end;
-       end;
-end;
+          end ;
+          end ;
+       end ;
+end ;
 
 
 procedure imprimirComprador(p: persona);
 begin
      with (p) do begin
           writeln('COMPRADOR: ', nombre_apellido, ' | DNI: ',DNI, ' | CORREO: ', correo, ' | PAGO: ', pago);
-     end;
-end;
+     end ;
+end ;
 
 procedure imprimir(e: entrada);
 begin
@@ -196,16 +196,16 @@ begin
           writeln('');
           writeln('ENTRADA: ', codigo, ' | BUTACA: ',butaca, ' | FILA: ', fila, ' | PLATEA: ', platea, ' | precio: ', precio:0:2, ' | FECHA: ', fecha_show.dia,'/',fecha_show.mes,'/',fecha_show.anio);
           imprimirComprador(comprador);
-     end;
-end;
+     end ;
+end ;
 
 procedure imprimirLista(l: lista);
 begin
      while (l <> nil) do begin
           imprimir(l^.dato);
           l:= l^.sig;
-     end;
-end;
+     end ;
+end ;
 
 
 var

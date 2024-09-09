@@ -199,7 +199,7 @@ Type
                          end else
                          begin
                               UAct^.sig := NU ;
-                         end;
+                         end ;
 
                          UAct := NU  ;
                          TAct := Nil ;
@@ -216,13 +216,13 @@ Type
                     end else
                     begin
                          TAct^.sig := NT ;
-                    end;
+                    end ;
 
                     TAct := NT ;
 
                     LO := LO^.sig ;
-               end;
-          end;
+               end ;
+          end ;
      //
 
      // procedure imprimirListaUsuarios ( LU : TListausuarios ) ;

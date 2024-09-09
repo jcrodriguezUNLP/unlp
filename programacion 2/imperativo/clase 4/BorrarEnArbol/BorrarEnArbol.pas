@@ -210,7 +210,7 @@ Type
         imprimirArbol_enOrden ( arbol^.hijoIzq      ) ;
         Write                 ( arbol^.numero , ' ' ) ;
         imprimirArbol_enOrden ( arbol^.hijoDer      ) ;
-      end;
+      end ;
     end ;
   //
 
@@ -222,7 +222,7 @@ Type
         Write                  ( arbol^.numero , ' ' ) ;
         imprimirArbol_preOrden ( arbol^.hijoIzq      ) ;
         imprimirArbol_preOrden ( arbol^.hijoDer      ) ;
-      end;
+      end ;
     end ;
   //
 
@@ -234,7 +234,7 @@ Type
         imprimirArbol_postOrden ( arbol^.hijoIzq      ) ;
         imprimirArbol_postOrden ( arbol^.hijoDer      ) ;
         Write                   ( arbol^.numero , ' ' ) ;
-      end;
+      end ;
     end ;
   //
 
@@ -378,7 +378,7 @@ Type
         end else
         begin
           imprimirAcotado ( arbol^.hijoDer , inf , sup ) ;
-        end;
+        end ;
       end ;
     end ;
   //

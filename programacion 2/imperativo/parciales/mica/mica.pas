@@ -5,13 +5,13 @@ Type
 	TPaciente = record
 		DNI: longint;
 		nombre_apellido: TCadena70;
-	end;
+	end ;
 
 	TFecha=record
 		dia:1..31;
 		mes:1..12;
 		anio:integer;
-	end;
+	end ;
 	
     TVacuna= record
 		nombre : TCadena70 ;
@@ -19,14 +19,14 @@ Type
 		fecha: TFecha;
 		dosis : Integer ;
 		paciente: TPaciente;
-    end;
+    end ;
    
 	TListaVacunas = ^TNodoLista;
 
     TNodoLista = record
 	    vacuna: TVacuna;
 	    sig: TListaVacunas;
-    end;
+    end ;
  
 // creado por mi
 	TVacunaArbol = record
@@ -92,12 +92,12 @@ Type
 	end ;
 //
 
-procedure cargarFecha(var fecha: TFecha);
+procedure cargarFecha( var fecha : TFecha ) ;
 begin
-  fecha.dia := random(31) + 1;
-  fecha.mes := random(12) + 1;
-  fecha.anio := 2023;  // Supongamos que todas son del año 2023
-end;
+  fecha.dia  := random(31) + 1 ;
+  fecha.mes  := random(12) + 1 ;
+  fecha.anio := 2023           ;  // Supongamos que todas son del año 2023
+end ;
 
 procedure cargarPaciente(var paciente: TPaciente);
 const
@@ -107,7 +107,7 @@ begin
   paciente.DNI := random(3) + 25000000; // DNI aleatorio entre 10,000,000 y 99,999,999
   //paciente.nombre_apellido := nombres[random(5) + 1];
   paciente.nombre_apellido := nombres[1];
-end;
+end ;
 
 procedure agregarVacuna(var lista: TListaVacunas; vacuna: TVacuna);
 var
@@ -117,7 +117,7 @@ begin
   nuevoNodo^.vacuna := vacuna;
   nuevoNodo^.sig := lista;
   lista := nuevoNodo;
-end;
+end ;
 
 procedure crearListaVacunas(var lista: TListaVacunas);
 var
@@ -134,10 +134,10 @@ begin
       dosis := random(3) + 1;  // Dosis entre 1 y 3
       cargarFecha(fecha);
       cargarPaciente(paciente);
-    end;
+    end ;
     agregarVacuna(lista, vacuna);
-  end;
-end;
+  end ;
+end ;
 
 procedure imprimirVacuna(vacuna: TVacuna);
 begin
@@ -149,8 +149,8 @@ begin
     writeln('Fecha: ', fecha.dia, '/', fecha.mes, '/', fecha.anio);
     writeln('Paciente: ', paciente.nombre_apellido, ' (DNI: ', paciente.DNI, ')');
     writeln('-----------------------------------');
-  end;
-end;
+  end ;
+end ;
 
 procedure imprimirListaVacunas(lista: TListaVacunas);
 begin
@@ -158,8 +158,8 @@ begin
   begin
     imprimirVacuna(lista^.vacuna);
     lista := lista^.sig;
-  end;
-end;
+  end ;
+end ;
 
 // creado por mi
 	procedure inicializarArbol ( var arbol : TArbol ) ; //ATR
@@ -453,7 +453,7 @@ end;
 					begin
 						WriteLn( 'Arbol vacio' ) ;
 					end ;
-				end;
+				end ;
 			5:
 				begin
 					if ( arbol <> Nil ) then

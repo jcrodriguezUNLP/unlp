@@ -147,7 +147,7 @@ type
         end else
         begin
             busquedaDicotomicaRecursiva := 0 ;
-        end;
+        end ;
     end ;
 //
 

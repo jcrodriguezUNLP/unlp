@@ -40,7 +40,7 @@ Type
           aux^.sig      := LP ;
 
           LP := aux ;
-     end;
+     end ;
 //
 
 // procedure crearLista ( var LP : TListaProductos ) ;
@@ -81,10 +81,10 @@ Type
                          agregarAdelante( LP , p ) ;
                          
                          p.codigo := random( 10 ) ;
-                    end;
-               end;
-          end;
-     end;
+                    end ;
+               end ;
+          end ;
+     end ;
 //
 
 // procedure imprimir ( p : TProducto ) ;
@@ -93,8 +93,8 @@ Type
           with ( p ) do
           begin
                writeln( 'Producto', nombre, ' con codigo ',codigo, ': ', marca, ' Anio:', anio, ' Precio: ', precio:2:2 ) ;
-          end;
-     end;
+          end ;
+     end ;
 //
 
 // procedure imprimirLista ( LP : TListaProductos ) ;
@@ -105,8 +105,8 @@ Type
                imprimir( LP^.producto ) ;
 
                LP := LP^.sig ;
-          end;
-     end;
+          end ;
+     end ;
 //
 
 // creado por mi
@@ -165,7 +165,7 @@ Type
                     end else
                     begin
                          PAct^.sig := NP ;
-                    end;
+                    end ;
 
                     PAct := NP ;
 
@@ -197,9 +197,9 @@ Type
                          if (2020 <= productos^.producto.anio) and (100000 < productos^.producto.precio) then
                          begin
                               cant := cant + 1;
-                         end;
+                         end ;
                          productos := productos^.sig;
-                    end;
+                    end ;
                end ;
 
                separador ( 2                                                           ) ;

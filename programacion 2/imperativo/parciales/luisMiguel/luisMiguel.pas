@@ -791,7 +791,7 @@ Type
                         begin
                             WriteLn( 'Arbol vacio' ) ;
                         end ;
-                    end;
+                    end ;
                 5:
                     begin
                         if ( arbol <> Nil ) then
@@ -811,7 +811,7 @@ Type
                         begin
                             WriteLn( 'Arbol vacio' ) ;
                         end ;
-                    end;
+                    end ;
             end ;
         end ;
     //

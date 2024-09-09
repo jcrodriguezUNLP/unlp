@@ -22,8 +22,8 @@ type
             DimL           := ( DimL + 1 )  ;
             vector[ DimL ] := numero        ;
             numero         := random( 100 ) ;
-        end;
-    End;
+        end ;
+    end ;
 //
 
 // Procedure imprimirVector ( var vector : Tvector ; var DimL : TRangoDimL ) ;

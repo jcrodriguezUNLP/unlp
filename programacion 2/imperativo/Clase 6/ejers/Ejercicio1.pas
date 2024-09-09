@@ -1,6 +1,4 @@
-Program ejercicio1; 
-Uses
-     sysutils;
+Program ejercicio1 ;
 Type
      str10= string[10];
      jugador = record
@@ -8,13 +6,13 @@ Type
 	          nombreApellido: string;
 	          posicion: str10;
               puntaje: integer;
-     end;
+     end ;
 
      lista = ^nodoLista;
      nodoLista = record
                dato: jugador;
                sig: lista;
-     end;
+     end ;
 
      partido= record
                estadio: string;
@@ -22,13 +20,13 @@ Type
                equipoVisitante: string;
                fecha: str10;
                jugadores: lista;
-     end;
+     end ;
 
      listaPartidos = ^nodoPartido;
      nodoPartido = record
                dato: partido;
                sig: listaPartidos;
-     end;
+     end ;
 
 procedure cargarFecha(var s: str10);
 var
@@ -41,7 +39,7 @@ begin
   if((mes = 4) or (mes = 6) or (mes =9) or (mes = 11)) and (dia = 31)then
 	dia := 30;
   s := Concat('2022/',IntToStr(mes),'/',IntToStr(dia));
-end;
+end ;
 
 Procedure agregar(var l: listaPartidos; p: partido);
 var
@@ -51,7 +49,7 @@ begin
      aux^.dato := p;
      aux^.sig := l;
      l:= aux;
-end;
+end ;
 
 Procedure agregarJugador(var l: lista; j: jugador);
 var
@@ -61,7 +59,7 @@ begin
      aux^.dato := j;
      aux^.sig := l;
      l:= aux;
-end;
+end ;
 
 procedure cargarJugadores(var l: lista);
 var
@@ -80,12 +78,12 @@ begin
                 2: posicion:= 'defensa';
                 3: posicion:= 'mediocampo';
                 4: posicion:= 'delantero';
-              end;
+              end ;
               puntaje:= random(10)+1;
-          end;
+          end ;
           agregarJugador(l, j);
-     end;
-end;
+     end ;
+end ;
 
 procedure crearLista(var l: listaPartidos);
 var
@@ -102,10 +100,10 @@ begin
                cargarFecha(fecha);
                jugadores:= nil;
                cargarJugadores(jugadores);
-          end;
+          end ;
           agregar(l, p);
-     end;
-end;
+     end ;
+end ;
 
 
 
@@ -113,16 +111,16 @@ procedure imprimirJugador(j: jugador);
 begin
      with (j) do begin
           writeln('Jugador: ', nombreApellido, ' con dni ',dni, ' en posicion: ', posicion, ' y puntaje: ', puntaje);
-     end;
-end;
+     end ;
+end ;
 
 procedure imprimirJugadores(l: lista);
 begin
      while (l <> nil) do begin
           imprimirJugador(l^.dato);
           l:= l^.sig;
-     end;
-end;
+     end ;
+end ;
 
 procedure imprimir(p: partido);
 begin
@@ -130,16 +128,16 @@ begin
           writeln('');
           writeln('Partido en el ', estadio, ' entre ',equipoLocal, ' y ', equipoVisitante, ' jugado el: ', fecha, ' por los siguientes jugadores: ');
           imprimirJugadores(jugadores);
-     end;
-end;
+     end ;
+end ;
 
 procedure imprimirLista(l: listaPartidos);
 begin
      while (l <> nil) do begin
           imprimir(l^.dato);
           l:= l^.sig;
-     end;
-end;
+     end ;
+end ;
 
 
 var

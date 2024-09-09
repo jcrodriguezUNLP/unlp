@@ -1,6 +1,4 @@
-Program ejercicio3;
-Uses
-     sysutils;
+Program ejercicio3 ;
 Type
      pedido= record
 	      codSeg: integer;
@@ -9,13 +7,13 @@ Type
 	      codArea: integer;
           domicilio: string;
           tel: string;
-     end;
+     end ;
 
      listaPedidos = ^nodoLista;
      nodoLista = record
                dato: pedido;
                sig: listaPedidos;
-     end;
+     end ;
 
 procedure agregarLista(var pri:listaPedidos; p:pedido);
 var
@@ -33,14 +31,14 @@ begin
          while (actual<>nil) and (actual^.dato.dni < nuevo^.dato.dni) do begin
               anterior := actual;
               actual:= actual^.sig;
-         end;
+         end ;
          if (anterior = actual) then
               pri := nuevo
          else
               anterior^.sig := nuevo;
          nuevo^.sig := actual;
-    end;
-end;
+    end ;
+end ;
 
 
 function cargarFecha(): string;{Genera una FECHA aleatoria}
@@ -62,7 +60,7 @@ begin
   else
 	s:= Concat(s,':', IntToStr(seg));
   cargarFecha:= s;
-end;
+end ;
 
 procedure crearLista(var l: listaPedidos);
 var
@@ -81,14 +79,14 @@ begin
           agregarLista(l, p);
           cant:= cant-1;
           cod := cod+1;
-     end;
-end;
+     end ;
+end ;
 
 procedure imprimirPedido(p:pedido);
 begin
     with(p)do
          writeln('El pedido ',codSeg, ' del cliente ', dni, ' sera atendido en la fecha ', fechaYhora, ' en el codigo de area ', codArea, ' y domicilio ', domicilio, ' con tel. de contacto ', tel);
-end;
+end ;
 
 procedure imprimirLista(l:listaPedidos);
 begin
@@ -96,8 +94,8 @@ begin
     begin
          imprimirPedido(l^.dato);
          l:=l^.sig;
-    end;
-end;
+    end ;
+end ;
 
 var
    l_inicial: listaPedidos;
