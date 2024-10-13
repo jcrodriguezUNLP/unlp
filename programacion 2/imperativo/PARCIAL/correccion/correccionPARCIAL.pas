@@ -482,26 +482,26 @@ Type
 			nombre        : TNombres ;
 
 		begin
-			nombre [ 1  ] := 'Lionel Perez'         ;
-			nombre [ 2  ] := 'Martin Fernandez'     ;
-			nombre [ 3  ] := 'Mariano Gomez'        ;
-			nombre [ 4  ] := 'Alejandro Gonzalez'   ;
-			nombre [ 5  ] := 'Fermin Martinez'      ;
-			nombre [ 6  ] := 'Nicolas Castro'       ;
-			nombre [ 7  ] := 'Gonzalo Villareal'    ;
-			nombre [ 8  ] := 'Tadeo Parodi'         ;
-			nombre [ 9  ] := 'Juan Pablo Silvestre' ;
-			nombre [ 10 ] := 'Mariano Sanchez'      ;
-			nombre [ 11 ] := 'Alejo Monden'         ;
-			nombre [ 12 ] := 'Agustin Paz'          ;
-			nombre [ 13 ] := 'Juan Salto'           ;
-			nombre [ 14 ] := 'Matias Pidone'        ;
-			nombre [ 15 ] := 'Luis Hernandez'       ;
-			nombre [ 16 ] := 'Cristian Herrera'     ;
-			nombre [ 17 ] := 'Santiago Manzur'      ;
-			nombre [ 18 ] := 'Julian Darino'        ;
-			nombre [ 19 ] := 'Victor Abila'         ;
-			nombre [ 20 ] := 'Luciano Segura'       ;
+			nombre [ 1  ] := 'Lionel Andres Messi Cuccittini' ;
+			nombre [ 2  ] := 'Martin Demichele'     		  ;
+			nombre [ 3  ] := 'Papu Gomez'        			  ;
+			nombre [ 4  ] := 'Alejandro GARNACHOOOOOOOO'   	  ;
+			nombre [ 5  ] := 'Lautaro Martinez'      		  ;
+			nombre [ 6  ] := 'Nicolas Dominguez'       		  ;
+			nombre [ 7  ] := 'Gonzalo Montiel'    			  ;
+			nombre [ 8  ] := 'Leandro Paredes'         		  ;
+			nombre [ 9  ] := 'Adrian Suar' 			          ;
+			nombre [ 10 ] := 'Mariano Andujar'      		  ;
+			nombre [ 11 ] := 'Iker Muniain'         		  ;
+			nombre [ 12 ] := 'Nicolas Paz'          		  ;
+			nombre [ 13 ] := 'Juan Hurtado'           		  ;
+			nombre [ 14 ] := 'Matias Reali'        			  ;
+			nombre [ 15 ] := 'Luisito Comunica'       		  ;
+			nombre [ 16 ] := 'Cuti Romero'     				  ;
+			nombre [ 17 ] := 'Santi Lopez'      			  ;
+			nombre [ 18 ] := 'Julian Alvarez'        		  ;
+			nombre [ 19 ] := 'Hector Villalba'         		  ;
+			nombre [ 20 ] := 'Luciano Castro'       		  ;
 
 			if ( (local = 'Argentina') or (visitante = 'Argentina') ) then
 			begin

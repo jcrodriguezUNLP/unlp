@@ -1,20 +1,20 @@
-Program TPGrupoX; 
+Program grupo11 ; 
 Type
-     TCadena70= string[70];
-     
-	 TJugador = record
-        DNI: longint;
-	    nombre_apellido: TCadena70;
-        seleccion: TCadena70;
-	    goles: integer;
-     end ;
+	TCadena70= string[70];
+	
+	TJugador = record
+		DNI: longint;
+		nombre_apellido: TCadena70;
+		seleccion: TCadena70;
+		goles: integer;
+	end ;
 
-     TListaGoleadores = ^TNodoListaGoleadores;
-     
-     TNodoListaGoleadores = record
-	    jugador: TJugador;
-	    sig: TListaGoleadores;
-     end ;
+	TListaGoleadores = ^TNodoListaGoleadores;
+	
+	TNodoListaGoleadores = record
+		jugador: TJugador;
+		sig: TListaGoleadores;
+	end ;
 
 	TFecha=record
 		dia:1..31;
@@ -27,18 +27,18 @@ Type
 		seleccion_l: TCadena70;
 		seleccion_2: TCadena70;
 		fecha: TFecha;
-        estadio: TCadena70;
+		estadio: TCadena70;
 		goleadores: TListaGoleadores;
-     end ;
+	end ;
 
-     TListaPartidos = ^TNodoPartidos;
+	TListaPartidos = ^TNodoPartidos;
      
-     TNodoPartidos = record
-            partido: TPartido;
-            sig: TListaPartidos;
-     end ;
+	TNodoPartidos = record
+		partido: TPartido;
+		sig: TListaPartidos;
+	end ;
 
-     TNombres= array [1..20] of TCadena70;
+	TNombres= array [1..20] of TCadena70;
 
      {Completar con los tipos de datos necesarios}
 
