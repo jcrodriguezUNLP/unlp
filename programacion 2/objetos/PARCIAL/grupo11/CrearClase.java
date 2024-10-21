@@ -1,5 +1,3 @@
-package grupo11;
-
 import java.util.Scanner ;
 
 public class CrearClase {

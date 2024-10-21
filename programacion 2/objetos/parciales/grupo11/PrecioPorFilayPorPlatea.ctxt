@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=PrecioPorFilayPorPlatea
+comment1.params=
+comment1.target=PrecioPorFilayPorPlatea()
+comment2.params=fila\ platea
+comment2.target=double\ obtenerPrecioBaseEntrada(int,\ java.lang.String)
+numComments=3

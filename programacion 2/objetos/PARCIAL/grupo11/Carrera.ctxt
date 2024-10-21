@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=Carrera
+comment1.params=
+comment1.target=Carrera()
+comment2.params=lugar
+comment2.target=Carrera(java.lang.String)
+comment3.params=
+comment3.target=java.lang.String\ getLugar()
+comment4.params=
+comment4.target=Piloto[]\ getPilotos()
+comment5.params=lugar
+comment5.target=void\ setLugar(java.lang.String)
+comment6.params=pilotos
+comment6.target=void\ setPilotos(Piloto[])
+comment7.params=piloto
+comment7.target=void\ agregarPiloto(Piloto)
+comment8.params=
+comment8.target=java.lang.String\ toString()
+numComments=9

@@ -1,3 +1,5 @@
+package grupo11;
+
 import java.util.Scanner ;
 
 public class Main {
@@ -237,6 +239,7 @@ public class Main {
                 break ;
                     
                 case 5: // Salir
+                
                     System.out.println("Saliendo...") ;
                 break ;
 
