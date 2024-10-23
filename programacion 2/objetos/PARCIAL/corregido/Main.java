@@ -7,12 +7,23 @@ public class Main {
         int opcion ;
                 
         Carreras carreras = new Carreras() ;
+
+        String lugar ;
+        int numPiloto ;
+        String nombre ;
+        String apellido ;
+        int rankingMundial ;
+        int clasificacion ;
+        int horas ;
+        int minutos ;
+        int mejorPuesto  ;
         
         do {// Mostrar el menú
             System.out.println( "\nMENU PRINCIPAL:" ) ; 
             System.out.println( "1. Cargar carrera" ) ;
             System.out.println( "2. imprimir carreras" ) ;
-            System.out.println( "3. Salir" ) ;
+            System.out.println( "3. carreras automatico" ) ;
+            System.out.println( "4. salir" ) ;
             System.out.print( "Seleccione una opción: " ) ;
             opcion = in.nextInt() ;
             in.nextLine() ; // Consumir el salto de línea
@@ -27,50 +38,53 @@ public class Main {
                     System.out.println( "\nCARRERA" ) ;
         
                     System.out.print( "    Ingrese lugar( String ): " ) ;
-                    String lugar = in.nextLine() ;
+                    lugar = in.nextLine() ;
                     
                     Carrera carrera = new Carrera( lugar ) ;
 
                     // PILOTOS
                         System.out.println( "    PILOTOS" ) ;
 
-                        int numPiloto = 1 ;
+                        numPiloto = 1 ;
                         
-                        Piloto piloto ;
-
                         do {
                             System.out.println( "        piloto N°" + numPiloto + ":" ) ;
                             
                             System.out.print( "            Ingrese nombre( String ): " ) ;
-                            String nombre = in.nextLine() ;
+                            nombre = in.nextLine() ;
 
                             System.out.print( "            Ingrese apellido( String ): " ) ;
-                            String apellido = in.nextLine() ;
+                            apellido = in.nextLine() ;
                             // in.nextLine() ; // Consumir el salto de línea
                             
                             System.out.print( "            Ingrese rankingMundial( int ): " ) ;
-                            int rankingMundial = in.nextInt() ;
+                            rankingMundial = in.nextInt() ;
 
                             System.out.print( "            Ingrese clasificacion( 1..10 ): " ) ;
-                            int clasificacion = in.nextInt() ;
+                            clasificacion = in.nextInt() ;
+
+                            Piloto piloto ;
                             
                             if ( clasificacion <= 5 ){
                                 System.out.print( "            Ingrese horas( 0..23 ): " ) ;
-                                int horas = in.nextInt() ;
+                                horas = in.nextInt() ;
                                 
                                 System.out.print( "            Ingrese minutos( 0..59 ): " ) ;
-                                int minutos = in.nextInt() ;
+                                minutos = in.nextInt() ;
 
                                 in.nextLine() ; // Consumir el salto de línea
                                 
                                 Tiempo tiempo = new Tiempo( horas , minutos ) ;
                                 
-                                piloto = new Clasificados( nombre , apellido , clasificacion , rankingMundial , tiempo ) ;
+                                piloto = new Clasificados( nombre , apellido , rankingMundial , tiempo ) ;
                             } else {
-                                piloto = new NoClasificados( nombre , apellido , clasificacion , rankingMundial ) ;
+                                System.out.print( "            Ingrese mejorPuesto( 1..10 ): " ) ;
+                                mejorPuesto = in.nextInt() ;
+
+                                piloto = new NoClasificados( nombre , apellido , rankingMundial , mejorPuesto) ;
                             }
 
-                            carrera.agregarPiloto( piloto ) ;
+                            carrera.agregarPiloto( piloto , clasificacion ) ;
 
                             numPiloto++ ;
                         } while ( numPiloto <= carrera.getMAX_PILOTOS() ) ;
@@ -85,10 +99,41 @@ public class Main {
                         break ;
                     }
 
-                    carreras.imprimirCarreras() ;
+                    System.out.println( carreras.toString() ) ;
                 break ;
 
-                case 3: // Salir
+                case 3: // automatico
+                    System.out.println( "\nCARRERA AUTOMÁTICA" ) ;
+
+                    int numCarrera ;
+        
+                    for ( numCarrera = 1 ; numCarrera <= carreras.getMAX_CARRERAS() ; numCarrera++ ) {
+                        Carrera carreraAuto = new Carrera( "China" ) ;
+            
+                        for ( clasificacion = 1 ; clasificacion <= carreraAuto.getMAX_PILOTOS() ; clasificacion++ ) {
+                            nombre = "NombrePiloto" + clasificacion ;
+                            apellido = "ApellidoPiloto" + clasificacion ;
+                            rankingMundial = clasificacion ;
+
+                            Piloto piloto ;
+                            
+                            if ( clasificacion <= 5 ) {
+                                Tiempo tiempo = new Tiempo( 1 , clasificacion ) ;
+                                piloto = new Clasificados( nombre , apellido , rankingMundial , tiempo ) ;
+                            } else {
+                                piloto = new NoClasificados( nombre , apellido , rankingMundial , (10 - numCarrera) ) ;
+                            }
+
+                            carreraAuto.agregarPiloto( piloto , clasificacion ) ;
+                        }
+
+                        carreras.agregarCarrera( carreraAuto ) ;
+                        System.out.println( "Carrera automática cargada." ) ;
+                    }
+                break ;
+
+
+                case 4: // Salir
                     System.out.println("Saliendo...") ;
                 break ;
 
@@ -97,7 +142,7 @@ public class Main {
                 break ;
             }
 
-        } while( opcion != 3 ) ;
+        } while( opcion != 4 ) ;
 
         in.close() ; // Cerrar el Scanner
     }

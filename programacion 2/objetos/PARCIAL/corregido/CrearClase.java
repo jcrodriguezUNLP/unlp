@@ -6,7 +6,7 @@ public class CrearClase {
 
         String clase ; // Nombre de la clase
         int cantVariables ; // Cantidad de variables
-        Variables[] variables ; // Array para almacenar las variables
+        Variable[] variables ; // Array para almacenar las variables
         int i ;
 
         System.out.print( "\nIngrese el nombre de la clase: " ) ;
@@ -16,7 +16,7 @@ public class CrearClase {
         cantVariables = in.nextInt() ; // Lee la cantidad de variables
         in.nextLine() ; // Consume el salto de línea
 
-        variables = new Variables[ cantVariables ] ; // Inicializa el array de variables
+        variables = new Variable[ cantVariables ] ; // Inicializa el array de variables
 
         for ( i = 0 ; i < cantVariables ; i++ ) {
             System.out.println( "\nvariable N°" + ( i + 1 ) + ":" ) ;
@@ -27,7 +27,7 @@ public class CrearClase {
             System.out.print( "    Tipo: " ) ;
             String tipo = in.nextLine() ; // Lee el tipo de variable
 
-            variables[ i ] = new Variables( tipo , nombre ) ; // Crea una instancia de Variables
+            variables[ i ] = new Variable( tipo , nombre ) ; // Crea una instancia de Variable
         }
 
         // Generación de la clase
@@ -73,9 +73,6 @@ public class CrearClase {
         }
         System.out.println( "    //" ) ;
 
-        // Cerrar el Scanner
-        in.close() ;
-
         // Generación del método toString()
         System.out.println( "\n    @Override" ) ;
         System.out.println( "    public String toString() {" ) ;
@@ -88,6 +85,9 @@ public class CrearClase {
         System.out.println( "    }" ) ;
 
         System.out.println( "}" ) ; // Cerrar la clase
+
+        // Cerrar el Scanner
+        in.close() ;
     }
 
     // Método auxiliar para capitalizar la primera letra
@@ -95,27 +95,24 @@ public class CrearClase {
         return str.substring( 0 , 1 ).toUpperCase() + str.substring( 1 ) ;
     }
 
-    // Clase Variables
-    static class Variables {
+    // Clase Variable
+    static class Variable {
         private String tipo ;
         private String nombre ;
 
         // constructores
-        public Variables() {}
+        public Variable() {}
 
-        public Variables( String tipo , String nombre ) {
+        public Variable( String tipo , String nombre ) {
             this.tipo = tipo ;
             this.nombre = nombre ;
         }
+        //
 
         // getters
-        public String getTipo() { return tipo ; }
+            public String getTipo() { return tipo ; }
 
-        public String getNombre() { return nombre ; }
-
-        // setters
-        public void setTipo( String tipo ) { this.tipo = tipo ; }
-
-        public void setNombre( String nombre ) { this.nombre = nombre ; }
+            public String getNombre() { return nombre ; }
+        //
     }
 }

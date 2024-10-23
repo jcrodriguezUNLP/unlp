@@ -1,17 +1,19 @@
 public class Carreras {
     private Carrera[] carreras ;
 
-    private int cantCarreras = 0 ;
+    private int cantCarreras ;
     
-    private int MAX_CARRERAS = 2 ;
+    private int MAX_CARRERAS ;
 
     // constructores
         public Carreras() {
-            this.carreras = new Carrera[ MAX_CARRERAS ] ;
-        }
+            // DimL
+            cantCarreras = 0 ;
 
-        public Carreras( Carrera[] carreras  ) {
-            this.carreras = carreras ;
+            // son maximo 5 pero pongo 2 para ejecutar mas rapido
+            MAX_CARRERAS = 5 ;
+
+            this.carreras = new Carrera[ MAX_CARRERAS ] ;
         }
     //
 
@@ -67,9 +69,6 @@ public class Carreras {
             Piloto piloto ;
             int puntosPiloto ;
 
-            Clasificados clasificado ;
-            NoClasificados noClasificado ;
-
             for ( i = 0 ; i < cantCarreras ; i++ ) {
                 carrera = carreras[ i ] ;
                 
@@ -77,19 +76,15 @@ public class Carreras {
                 
                 pilotos = carrera.getPilotos() ;
                 
-                for ( j = 0 ; j < carrera.getCantPilotos() ; j++ ){                    
+                for ( j = 0 ; j < carrera.getMAX_PILOTOS() ; j++ ){                    
                     piloto = pilotos[ j ] ;
                     
                     puntosPiloto = 0 ;
                     
-                    if ( piloto.getClasificacion() <= 5 ) {
-                        clasificado = (Clasificados) piloto ;
-                        
-                        puntosPiloto += clasificado.calcularPuntos() ;
+                    if ( i <= 5 ) {
+                        puntosPiloto += piloto.calcularPuntos( i ) ;
                     } else {
-                        noClasificado = (NoClasificados) piloto ;
-                        
-                        puntosPiloto += noClasificado.calcularPuntos() ;
+                        puntosPiloto += piloto.calcularPuntos( i ) ;
                     }
                     
                     puntosPiloto += obtenerPuntosPorLugar( carrera ) ;
@@ -100,51 +95,18 @@ public class Carreras {
             
             return( puntosTotales ) ;
         }
-        
-        public void imprimirCarreras() {
-            Carrera carrera ;
-            int i ;
-            int j ;
-            
-            for ( i = 0 ; i < cantCarreras ; i++ ) {
-                carrera = carreras[ i ] ;
-                
-                System.out.println( "\ncarrera N°" + (i + 1) ) ;
-                
-                System.out.println( "    Lugar de la carrera: " + carrera.getLugar() ) ;
-                
-                for ( j = 0 ; j < carrera.getCantPilotos() ; j++ ){                    
-                    Piloto piloto = carrera.getPilotos()[ j ] ;
-                    
-                    int puntosPiloto = 0 ;
-                    
-                    System.out.println( "    piloto N°" + (j + 1) ) ;
-                
-                    System.out.println( "        nombre: " + piloto.getNombre() ) ;
-                    System.out.println( "        apellido: " + piloto.getApellido() ) ;
-                    System.out.println( "        rankingMundial: " + piloto.getRankingMundial() ) ;
-                    System.out.println( "        clasificacion: " + piloto.getClasificacion() ) ;
-                    
-                    if ( piloto.getClasificacion() <= 5 ) {
-                        Clasificados clasificado = (Clasificados) piloto ;
-                        
-                        puntosPiloto += clasificado.calcularPuntos() ;
-                    } else {
-                        NoClasificados noClasificado = (NoClasificados) piloto ;
-                        
-                        puntosPiloto += noClasificado.calcularPuntos() ;
-                    }
-                    
-                    puntosPiloto += obtenerPuntosPorLugar( carrera ) ;
-                    
-                    System.out.println( "        puntos: " + puntosPiloto ) ;
-                }
-            }
-        }
     //
 
     @Override
     public String toString() {
-        return( "Carreras: " + carreras + " | cantCarreras: " + cantCarreras ) ;
+        String texto ;
+
+        texto = ( "CARRERAS:" ) ;
+
+        for ( int i = 0 ; i < cantCarreras ; i++ ) {
+            texto += "\n    " + carreras[ i ].toString() ;
+        }
+        
+        return texto ;
     }
 }

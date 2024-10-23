@@ -2,30 +2,19 @@ public class Clasificados extends Piloto {
     private Tiempo tiempo ;
 
     // constructores
-        public Clasificados() {}
-
-        public Clasificados( String nombre , String apellido , int clasificacion , int rankingMundial , Tiempo tiempo ) {
-            super( nombre , apellido , clasificacion , rankingMundial ) ;
+        public Clasificados( String nombre , String apellido , int rankingMundial , Tiempo tiempo ) {
+            super( nombre , apellido , rankingMundial ) ;
             
             this.tiempo = tiempo ;
         }
     //
-
-    // Getters
-        public Tiempo getTiempo() { return tiempo ; }
-    //
-
-    // Setters
-        public void setTiempo( Tiempo tiempo ) { this.tiempo = tiempo ; }
-    //
     
-    //
+    // Metodos
         @Override
-        public int calcularPuntos() {
-            int puntosTotales = 0 ;
-            int clasificacion = super.getClasificacion() ;
+        public int calcularPuntos( int clasificacion ) {
+            int puntos = 0 ;
 
-            puntosTotales += TablaPuntajesF1.obtenerPuntaje( clasificacion ) ; 
+            puntos += TablaPuntajesF1.obtenerPuntaje( clasificacion ) ; 
 
             int horas = tiempo.getHoras() ;
             int minutos = tiempo.getMinutos() ;
@@ -33,19 +22,23 @@ public class Clasificados extends Piloto {
             if ( horas == 1 ) {
                 if ( minutos <= 8 ) {
                     if ( (0 <= minutos) && (minutos < 5) ) {
-                        puntosTotales += 2 ;
+                        puntos += 2 ;
                     } else {
-                        puntosTotales += 1 ;
+                        puntos += 1 ;
                     }
                 }
             }
                      
-            return puntosTotales ;        
+            return puntos ;        
         }
     //
 
     @Override
     public String toString() {
-        return( "tiempo: " + tiempo ) ;
+        String texto ;
+
+        texto = ( super.toString() + "\n                tiempo: " + tiempo.toString() ) ;
+        
+        return texto ;
     }
 }

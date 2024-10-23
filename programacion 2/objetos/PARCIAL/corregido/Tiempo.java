@@ -25,6 +25,6 @@ public class Tiempo {
 
     @Override
     public String toString() {
-        return( "horas: " + horas + " | minutos: " + minutos ) ;
+        return( "\n                    horas: " + horas + "\n                    minutos: " + minutos ) ;
     }
 }

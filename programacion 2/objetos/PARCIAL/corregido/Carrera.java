@@ -2,16 +2,14 @@ public class Carrera {
     private String lugar ;
     private Piloto[] pilotos ;
     
-    private int cantPilotos = 0 ;
-    
-    private int MAX_PILOTOS = 2 ;
+    // numero maximo de pilotos por carrera
+    private int MAX_PILOTOS ;
 
     // constructores
-        public Carrera() {
-            pilotos = new Piloto[ MAX_PILOTOS ] ;
-        }
-
         public Carrera( String lugar ) {
+            // son 10 pero pongo 2 para ejecutar mas rapido
+            MAX_PILOTOS = 10 ;
+
             this.lugar = lugar ;
             
             pilotos = new Piloto[ MAX_PILOTOS ] ;
@@ -23,31 +21,27 @@ public class Carrera {
 
         public Piloto[] getPilotos() { return pilotos ; }
 
-        public int getCantPilotos() { return cantPilotos ; }
-
         public int getMAX_PILOTOS() { return MAX_PILOTOS ; }
     //
-
-    // Setters
-        public void setLugar( String lugar ) { this.lugar = lugar ; }
-
-        public void setPilotos( Piloto[] pilotos ) { this.pilotos = pilotos ; }
-    //
     
-    //
-        public void agregarPiloto( Piloto piloto ) {
-            if( cantPilotos < MAX_PILOTOS ) {
-                pilotos[ cantPilotos ] = piloto ;
-                
-                cantPilotos++ ;
-            } else {
-                System.out.println( "No se pueden agregar más pilotos" ) ;
-            }
+    // Metodos
+        public void agregarPiloto( Piloto piloto , int clasificacion ) {
+            // siempre se ingrasan los 10 pilotos ordenados por clasificacion
+            pilotos[ (clasificacion - 1) ] = piloto ;
         }
     //
 
     @Override
     public String toString() {
-        return( "lugar: " + lugar + " | pilotos: " + pilotos ) ;
+        String texto ;
+
+        texto = ( "CARRERA:" + "\n        lugar: " + lugar + "\n        pilotos:" ) ;
+
+        for ( int i = 0 ; i < MAX_PILOTOS ; i++ ) {
+            texto += "\n    " + pilotos[ i ].toString() ;
+            texto += "\n            puntos: " + pilotos[ i ].calcularPuntos( i + 1 ) ;
+        }
+
+        return texto ;
     }
 }
