@@ -30,7 +30,7 @@ public class Main {
 
             switch (opcion) {
                 case 1: // Cargar Carreras
-                    if ( carreras.getCantCarreras() >= carreras.getMAX_CARRERAS() ) {
+                    if ( carreras.getMAX_CARRERAS() <= carreras.getCantCarreras() ) {
                         System.out.println( "No se pueden agregar más carreras" ) ;
                         break ;
                     }
@@ -121,7 +121,7 @@ public class Main {
                                 Tiempo tiempo = new Tiempo( 1 , clasificacion ) ;
                                 piloto = new Clasificados( nombre , apellido , rankingMundial , tiempo ) ;
                             } else {
-                                piloto = new NoClasificados( nombre , apellido , rankingMundial , (10 - numCarrera) ) ;
+                                piloto = new NoClasificados( nombre , apellido , rankingMundial , clasificacion ) ;
                             }
 
                             carreraAuto.agregarPiloto( piloto , clasificacion ) ;

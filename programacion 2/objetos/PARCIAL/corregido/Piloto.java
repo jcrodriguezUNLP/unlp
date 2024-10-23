@@ -14,14 +14,6 @@ public abstract class Piloto {
         }
     //
 
-    // Getters
-        public String getNombre() { return nombre ; }
-
-        public String getApellido() { return apellido ; }
-
-        public int getRankingMundial() { return rankingMundial ; }
-    //
-
     // Metodos
         public abstract int calcularPuntos( int clasificacion ) ;
     //

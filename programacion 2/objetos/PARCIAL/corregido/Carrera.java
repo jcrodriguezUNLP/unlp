@@ -17,10 +17,6 @@ public class Carrera {
     //
 
     // Getters
-        public String getLugar() { return lugar ; }
-
-        public Piloto[] getPilotos() { return pilotos ; }
-
         public int getMAX_PILOTOS() { return MAX_PILOTOS ; }
     //
     
@@ -29,17 +25,40 @@ public class Carrera {
             // siempre se ingrasan los 10 pilotos ordenados por clasificacion
             pilotos[ (clasificacion - 1) ] = piloto ;
         }
+
+         public int obtenerPuntosPorLugar() {
+            int puntos = 0 ;
+            
+            if ( lugar.equals( "Japón" ) || lugar.equals( "China" ) ) {
+                puntos += 3 ;
+            } else {
+                if ( lugar.equals( "Bélgica" ) || lugar.equals( "Hungría" ) ) {
+                    puntos += 1 ;
+                }
+            }
+            
+            return puntos ;
+        }
     //
 
     @Override
     public String toString() {
         String texto ;
+        int puntos ;
+
+        int clasificacion ;
+
+        int puntosLugar = obtenerPuntosPorLugar() ;
 
         texto = ( "CARRERA:" + "\n        lugar: " + lugar + "\n        pilotos:" ) ;
 
-        for ( int i = 0 ; i < MAX_PILOTOS ; i++ ) {
-            texto += "\n    " + pilotos[ i ].toString() ;
-            texto += "\n            puntos: " + pilotos[ i ].calcularPuntos( i + 1 ) ;
+        for ( clasificacion = 1 ; clasificacion <= MAX_PILOTOS ; clasificacion++ ) {
+            puntos = pilotos[ (clasificacion - 1) ].calcularPuntos( clasificacion ) ;
+
+            puntos += puntosLugar ;
+
+            texto += "\n    " + pilotos[ (clasificacion - 1) ].toString() ;
+            texto += "\n            puntos: " + puntos ;
         }
 
         return texto ;
