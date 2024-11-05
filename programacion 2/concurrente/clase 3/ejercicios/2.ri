@@ -1,0 +1,105 @@
+programa ejer2
+procesos
+  proceso incrementar( ES x : numero )
+  comenzar
+    x := ( x + 1 )
+  fin
+  
+  proceso tomarFlores( ES cantFlores : numero )
+  comenzar
+    mientras( HayFlorEnLaEsquina )
+      tomarFlor
+      incrementar( cantFlores )
+  fin
+  
+  proceso tomarPapeles( ES cantPapeles : numero )
+  comenzar
+    mientras( HayPapelEnLaEsquina )
+      tomarPapel
+      incrementar( cantPapeles )
+  fin
+  
+  proceso limpiarEsquina( ES cantFlores : numero ; ES cantPapeles : numero )
+  comenzar
+    tomarFlores  ( cantFlores  )
+    tomarPapeles ( cantPapeles )
+  fin
+  
+  proceso limpiarLinea( E largo : numero ; E flores : boolean ; ES cantFlores : numero ; E papeles : boolean ; ES cantPapeles : numero )
+  comenzar
+    si( flores & papeles )
+      repetir( largo )
+        limpiarEsquina( cantFlores , cantPapeles )
+        mover
+      limpiarEsquina( cantFlores , cantPapeles )
+    sino
+      si( flores )
+        repetir( largo )
+          tomarFlores( cantFlores )
+          mover
+        tomarFlores( cantFlores )
+      sino
+        repetir( largo )
+          tomarPapeles( cantPapeles )
+          mover
+        tomarPapeles( cantPapeles )
+  fin
+  
+areas
+  ciudad: AreaC( 1 , 1 , 100 , 100 )
+
+robots
+  robot tipo1
+  variables
+    cantFlores  : numero
+    cantPapeles : numero
+    aux         : numero
+  comenzar
+    cantFlores  := 0
+    cantPapeles := 0
+    limpiarLinea( 9 , V , cantFlores , F , cantPapeles )
+    EnviarMensaje  ( cantFlores , robot3 )
+  fin
+  
+  robot tipo2
+  variables
+    cantFlores  : numero
+    cantPapeles : numero
+    aux         : numero
+  comenzar
+    cantFlores  := 0
+    cantPapeles := 0
+    limpiarLinea( 9 , V , cantFlores , F , cantPapeles )
+    EnviarMensaje  ( cantFlores , robot3 )
+  fin
+  
+  robot tipo3
+  variables
+    cantFlores1 : numero
+    cantFlores2 : numero
+  comenzar
+    RecibirMensaje( cantFlores1 , robot1 )
+    RecibirMensaje( cantFlores2 , robot2 )
+    si( cantFlores2 < cantFlores1 )
+      Informar( 'Gano robot1 por' , (cantFlores1 - cantFlores2) )
+    sino
+      si( cantFlores1 < cantFlores2 )
+        Informar( 'Gano robot2 por' , (cantFlores2 - cantFlores1) )
+      sino
+        Informar( 'empate' , 0 )
+  fin
+
+variables
+  robot1 : tipo1
+  robot2 : tipo2
+  robot3 : tipo3
+
+comenzar
+  AsignarArea( robot1 , ciudad )
+  AsignarArea( robot2 , ciudad )
+  AsignarArea( robot3 , ciudad )
+  Iniciar( robot1 , 1 , 1  )
+  Iniciar( robot2 , 2 , 11 )
+  Iniciar( robot3 , 2 , 1  )
+fin
+
