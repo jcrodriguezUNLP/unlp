@@ -1,10 +1,15 @@
-programa ejer3
+programa ejer1
 procesos
   proceso incrementar( ES x : numero )
   comenzar
     x := ( x + 1 )
   fin
   
+  proceso decrementar( ES x : numero )
+  comenzar
+    x := ( x - 1 )
+  fin
+
   proceso girar( ES direccionActual : numero ; E giros : numero )
   comenzar
     repetir( giros )
@@ -26,7 +31,58 @@ procesos
     mientras( direccionActual <> nuevaDireccion )
       girar( direccionActual , 1 )
   fin
+
+  proceso caminarLinea( E largo : numero ; E direccionActual : numero )
+  variables
+    AvAnterior : numero
+    CaAnterior : numero
+  comenzar
+    si( direccionActual = 0 )
+      repetir( largo )
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( PosAv , (PosCa + 1) )
+        mover
+        LiberarEsquina( AvAnterior , CaAnterior )
+    sino
+      si( direccionActual = 1 )
+        repetir( largo )
+          AvAnterior := PosAv
+          CaAnterior := PosCa
+          BloquearEsquina( (PosAv + 1) , PosCa )
+          mover
+          LiberarEsquina( AvAnterior , CaAnterior )
+      sino
+        si( direccionActual = 2 )
+          repetir( largo )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( PosAv , (PosCa - 1) )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+        sino
+          repetir( largo )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( (PosAv - 1) , PosCa )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+  fin
   
+  proceso agarrarFlor( ES cantFlores : numero )
+  comenzar
+    si( HayFlorEnLaEsquina )
+      tomarFlor
+      incrementar( cantFlores )
+  fin
+
+  proceso agarrarPapel( ES cantPapeles : numero )
+  comenzar
+    si( HayPapelEnLaEsquina )
+      tomarPapel
+      incrementar( cantPapeles )
+  fin
+
   proceso tomarFlores( ES cantFlores : numero )
   comenzar
     mientras( HayFlorEnLaEsquina )
@@ -47,97 +103,696 @@ procesos
     tomarPapeles ( cantPapeles )
   fin
   
-  proceso limpiarLinea( E largo : numero ; E FLORES : boolean ; ES cantFlores : numero ; E PAPELES : boolean ; ES cantPapeles : numero )
+  proceso tomarFloresLinea( E largo : numero ; E direccionActual : numero ; ES cantFlores : numero )
+  variables
+    AvAnterior : numero
+    CaAnterior : numero
   comenzar
-    si( FLORES & PAPELES )
+    si( direccionActual = 0 )
       repetir( largo )
-        limpiarEsquina( cantFlores , cantPapeles )
+        tomarFlores( cantFlores )
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( PosAv , (PosCa + 1) )
         mover
-      limpiarEsquina( cantFlores , cantPapeles )
+        LiberarEsquina( AvAnterior , CaAnterior )
     sino
-      si( FLORES )
+      si( direccionActual = 1 )
         repetir( largo )
           tomarFlores( cantFlores )
+          AvAnterior := PosAv
+          CaAnterior := PosCa
+          BloquearEsquina( (PosAv + 1) , PosCa )
           mover
-        tomarFlores( cantFlores )
+          LiberarEsquina( AvAnterior , CaAnterior )
       sino
+        si( direccionActual = 2 )
+          repetir( largo )
+            tomarFlores( cantFlores )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( PosAv , (PosCa - 1) )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+        sino
+          repetir( largo )
+            tomarFlores( cantFlores )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( (PosAv - 1) , PosCa )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+  fin
+
+  proceso tomarPapelesLinea( E largo : numero ; E direccionActual : numero ; ES cantPapeles : numero )
+  variables
+    AvAnterior : numero
+    CaAnterior : numero
+  comenzar
+    si( direccionActual = 0 )
+      repetir( largo )
+        tomarPapeles( cantPapeles )
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( PosAv , (PosCa + 1) )
+        mover
+        LiberarEsquina( AvAnterior , CaAnterior )
+    sino
+      si( direccionActual = 1 )
         repetir( largo )
           tomarPapeles( cantPapeles )
+          AvAnterior := PosAv
+          CaAnterior := PosCa
+          BloquearEsquina( (PosAv + 1) , PosCa )
           mover
-        tomarPapeles( cantPapeles )
+          LiberarEsquina( AvAnterior , CaAnterior )
+      sino
+        si( direccionActual = 2 )
+          repetir( largo )
+            tomarPapeles( cantPapeles )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( PosAv , (PosCa - 1) )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+        sino
+          repetir( largo )
+            tomarPapeles( cantPapeles )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( (PosAv - 1) , PosCa )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
   fin
   
-  proceso limpiarEscalon( E largo : numero ; ES direccionActual : numero ; E SENTIDO_HORARIO : boolean ; E FLORES : boolean ; ES cantFlores : numero ; E PAPELES : boolean ; ES cantPapeles : numero )
+  proceso limpiarLinea( E largo : numero ; E direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
+  variables
+    AvAnterior : numero
+    CaAnterior : numero
+  comenzar
+    si( direccionActual = 0 )
+      repetir( largo )
+        limpiarEsquina( cantFlores , cantPapeles )
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( PosAv , (PosCa + 1) )
+        mover
+        LiberarEsquina( AvAnterior , CaAnterior )
+    sino
+      si( direccionActual = 1 )
+        repetir( largo )
+          limpiarEsquina( cantFlores , cantPapeles )
+          AvAnterior := PosAv
+          CaAnterior := PosCa
+          BloquearEsquina( (PosAv + 1) , PosCa )
+          mover
+          LiberarEsquina( AvAnterior , CaAnterior )
+      sino
+        si( direccionActual = 2 )
+          repetir( largo )
+            limpiarEsquina( cantFlores , cantPapeles )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( PosAv , (PosCa - 1) )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+        sino
+          repetir( largo )
+            limpiarEsquina( cantFlores , cantPapeles )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( (PosAv - 1) , PosCa )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+  fin
+
+  proceso dejarFlor( ES cantFlores : numero )
+  comenzar
+    si( HayFlorEnLaBolsa )
+      dejarFlor
+      decrementar( cantFlores )
+  fin
+
+  proceso dejarPapel( ES cantPapeles : numero )
+  comenzar
+    si( HayPapelEnLaBolsa )
+      depositarPapel
+      decrementar( cantPapeles )
+  fin
+
+  proceso dejarFlores( ES cantFlores : numero )
+  comenzar
+    mientras( HayFlorEnLaBolsa )
+      dejarFlor
+      decrementar( cantFlores )
+  fin
+
+  proceso dejarPapeles( ES cantPapeles : numero )
+  comenzar
+    mientras( HayPapelEnLaBolsa )
+      dejarPapel
+      decrementar( cantPapeles )
+  fin
+
+  proceso vaciarBolsa( ES cantFlores : numero ; ES cantPapeles : numero )
+  comenzar
+    dejarFlores( cantFlores )
+    dejarPapeles( cantPapeles )
+  fin
+
+  proceso dejarFloresLinea( E largo : numero ; E direccionActual : numero ; ES cantFlores : numero )
+  variables
+    AvAnterior : numero
+    CaAnterior : numero
+  comenzar
+    si( direccionActual = 0 )
+      repetir( largo )
+        dejarFlor( cantFlores )
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( PosAv , (PosCa + 1) )
+        mover
+        LiberarEsquina( AvAnterior , CaAnterior )
+    sino
+      si( direccionActual = 1 )
+        repetir( largo )
+          dejarFlor( cantFlores )
+          AvAnterior := PosAv
+          CaAnterior := PosCa
+          BloquearEsquina( (PosAv + 1) , PosCa )
+          mover
+          LiberarEsquina( AvAnterior , CaAnterior )
+      sino
+        si( direccionActual = 2 )
+          repetir( largo )
+            dejarFlor( cantFlores )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( PosAv , (PosCa - 1) )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+        sino
+          repetir( largo )
+            dejarFlor( cantFlores )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( (PosAv - 1) , PosCa )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+  fin
+
+  proceso dejarPapelesLinea( E largo : numero ; E direccionActual : numero ; ES cantPapeles : numero )
+  variables
+    AvAnterior : numero
+    CaAnterior : numero
+  comenzar
+    si( direccionActual = 0 )
+      repetir( largo )
+        dejarPapel( cantPapeles )
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( PosAv , (PosCa + 1) )
+        mover
+        LiberarEsquina( AvAnterior , CaAnterior )
+    sino
+      si( direccionActual = 1 )
+        repetir( largo )
+          dejarPapel( cantPapeles )
+          AvAnterior := PosAv
+          CaAnterior := PosCa
+          BloquearEsquina( (PosAv + 1) , PosCa )
+          mover
+          LiberarEsquina( AvAnterior , CaAnterior )
+      sino
+        si( direccionActual = 2 )
+          repetir( largo )
+            dejarPapel( cantPapeles )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( PosAv , (PosCa - 1) )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+        sino
+          repetir( largo )
+            dejarPapel( cantPapeles )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( (PosAv - 1) , PosCa )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+  fin
+
+  proceso vaciarBolsaLinea( E largo : numero ; E direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
+  variables
+    AvAnterior : numero
+    CaAnterior : numero
+  comenzar
+    si( direccionActual = 0 )
+      repetir( largo )
+        vaciarBolsa( cantFlores , cantPapeles )
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( PosAv , (PosCa + 1) )
+        mover
+        LiberarEsquina( AvAnterior , CaAnterior )
+    sino
+      si( direccionActual = 1 )
+        repetir( largo )
+          vaciarBolsa( cantFlores , cantPapeles )
+          AvAnterior := PosAv
+          CaAnterior := PosCa
+          BloquearEsquina( (PosAv + 1) , PosCa )
+          mover
+          LiberarEsquina( AvAnterior , CaAnterior )
+      sino
+        si( direccionActual = 2 )
+          repetir( largo )
+            vaciarBolsa( cantFlores , cantPapeles )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( PosAv , (PosCa - 1) )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+        sino
+          repetir( largo )
+            vaciarBolsa( cantFlores , cantPapeles )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( (PosAv - 1) , PosCa )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+  fin
+
+  proceso tomarFloresPerimetro(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantFlores : numero )
+  comenzar
+    tomarFloresLinea( alto , direccionActual , cantFlores )
+    girar( direccionActual , 1 )
+
+    tomarFloresLinea( ancho , direccionActual , cantFlores )
+    girar( direccionActual , 1 )
+
+    tomarFloresLinea( alto , direccionActual , cantFlores )
+    girar( direccionActual , 1 )
+
+    tomarFloresLinea( ancho , direccionActual , cantFlores )
+  fin
+
+  proceso tomarPapelesPerimetro(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantPapeles : numero )
+  comenzar
+    tomarPapelesLinea( alto , direccionActual , cantPapeles )
+    girar( direccionActual , 1 )
+
+    tomarPapelesLinea( ancho , direccionActual , cantPapeles )
+    girar( direccionActual , 1 )
+
+    tomarPapelesLinea( alto , direccionActual , cantPapeles )
+    girar( direccionActual , 1 )
+
+    tomarPapelesLinea( ancho , direccionActual , cantPapeles )
+  fin
+
+  proceso limpiarPerimetro(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
+  comenzar
+    limpiarLinea( alto , direccionActual , cantFlores , cantPapeles )
+    girar( direccionActual , 1 )
+
+    limpiarLinea( ancho , direccionActual , cantFlores , cantPapeles )
+    girar( direccionActual , 1 )
+
+    limpiarLinea( alto , direccionActual , cantFlores , cantPapeles )
+    girar( direccionActual , 1 )
+
+    limpiarLinea( ancho , direccionActual , cantFlores , cantPapeles )
+  fin
+
+  proceso tomarFloresRectangulo(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantFlores : numero )
+  variables
+    AvInicial   : numero
+    CaInicial   : numero
+    lineaActual : numero
+  comenzar
+    AvInicial   := PosAv
+    CaInicial   := PosCa
+    lineaActual := 1
+    repetir( ancho )
+      tomarFloresLinea( alto , direccionActual , cantFlores )
+      BloquearEsquina( (AvInicial + lineaActual) , CaInicial )
+      Pos( (AvInicial + lineaActual) , CaInicial )
+      incrementar( lineaActual )
+  fin
+
+  proceso tomarPapelesRectangulo(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantPapeles : numero )
+  variables
+    AvInicial   : numero
+    CaInicial   : numero
+    lineaActual : numero
+  comenzar
+    AvInicial   := PosAv
+    CaInicial   := PosCa
+    lineaActual := 1
+    repetir( ancho )
+      tomarPapelesLinea( alto , direccionActual , cantPapeles )
+      BloquearEsquina( (AvInicial + lineaActual) , CaInicial )
+      Pos( (AvInicial + lineaActual) , CaInicial )
+      incrementar( lineaActual )
+  fin
+
+  proceso limpiarRectangulo(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
+  variables
+    AvInicial   : numero
+    CaInicial   : numero
+    lineaActual : numero
+  comenzar
+    AvInicial   := PosAv
+    CaInicial   := PosCa
+    lineaActual := 1
+    repetir( ancho )
+      limpiarLinea( alto , direccionActual , cantFlores , cantPapeles )
+      BloquearEsquina( (AvInicial + lineaActual) , CaInicial )
+      Pos( (AvInicial + lineaActual) , CaInicial )
+      incrementar( lineaActual )
+  fin
+
+  proceso dejarFloresRectangulo(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantFlores : numero )
+  variables
+    AvInicial   : numero
+    CaInicial   : numero
+    lineaActual : numero
+  comenzar
+    AvInicial   := PosAv
+    CaInicial   := PosCa
+    lineaActual := 1
+    repetir( ancho )
+      dejarFloresLinea( alto , direccionActual , cantFlores )
+      BloquearEsquina( (AvInicial + lineaActual) , CaInicial )
+      Pos( (AvInicial + lineaActual) , CaInicial )
+      incrementar( lineaActual )
+  fin
+
+  proceso dejarPapelesRectangulo(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantPapeles : numero )
+  variables
+    AvInicial   : numero
+    CaInicial   : numero
+    lineaActual : numero
+  comenzar
+    AvInicial   := PosAv
+    CaInicial   := PosCa
+    lineaActual := 1
+    repetir( ancho )
+      dejarPapelesLinea( alto , direccionActual , cantPapeles )
+      BloquearEsquina( (AvInicial + lineaActual) , CaInicial )
+      Pos( (AvInicial + lineaActual) , CaInicial )
+      incrementar( lineaActual )
+  fin
+
+  proceso vaciarBolsaRectangulo(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
+  variables
+    AvInicial   : numero
+    CaInicial   : numero
+    lineaActual : numero
+  comenzar
+    AvInicial   := PosAv
+    CaInicial   := PosCa
+    lineaActual := 1
+    repetir( ancho )
+      vaciarBolsaLinea( alto , direccionActual , cantFlores , cantPapeles )
+      BloquearEsquina( (AvInicial + lineaActual) , CaInicial )
+      Pos( (AvInicial + lineaActual) , CaInicial )
+      incrementar( lineaActual )
+  fin
+
+  proceso tomarFloresEscalon(  E largo : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantFlores : numero )
   comenzar
     si( SENTIDO_HORARIO )
-      repetir( 2 )
-        limpiarLinea( largo , FLORES , cantFlores , PAPELES , cantPapeles )
+      repetir( largo )
+        tomarFloresLinea( largo , direccionActual , cantFlores )
         girar( direccionActual , 1 )
-    sino
-      repetir( 2 )
-        limpiarLinea( largo , FLORES , cantFlores , PAPELES , cantPapeles )
+        tomarFloresLinea( largo , direccionActual , cantFlores )
         girar( direccionActual , 3 )
-    girar( direccionActual , 2 )
+    sino
+      repetir( largo )
+        tomarFloresLinea( largo , direccionActual , cantFlores )
+        girar( direccionActual , 3 )
+        tomarFloresLinea( largo , direccionActual , cantFlores )
+        girar( direccionActual , 1 )
   fin
 
-  proceso limpiarEscalera( E escalones : numero ; E largo : numero ; E incremento : numero ; ES direccionActual : numero ; E SENTIDO_HORARIO : boolean ; E FLORES : boolean ; ES cantFlores : numero ; E PAPELES : boolean ; ES cantPapeles : numero )
-  variables
-    numEscalon : numero
+  proceso tomarPapelesEscalon(  E largo : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantPapeles : numero )
   comenzar
-    numEscalon := 1
-    repetir( escalones )
-      si( 1 < numEscalon )
-        largo := ( largo + incremento )
-      limpiarEscalon( largo , direccionActual , SENTIDO_HORARIO , FLORES , cantFlores , PAPELES , cantPapeles )
-      incrementar( numEscalon )
+    si( SENTIDO_HORARIO )
+      repetir( largo )
+        tomarPapelesLinea( largo , direccionActual , cantPapeles )
+        girar( direccionActual , 1 )
+        tomarPapelesLinea( largo , direccionActual , cantPapeles )
+        girar( direccionActual , 3 )
+    sino
+      repetir( largo )
+        tomarPapelesLinea( largo , direccionActual , cantPapeles )
+        girar( direccionActual , 3 )
+        tomarPapelesLinea( largo , direccionActual , cantPapeles )
+        girar( direccionActual , 1 )
   fin
-  
+
+  proceso limpiarEscalon(  E largo : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
+  comenzar
+    si( SENTIDO_HORARIO )
+      repetir( largo )
+        limpiarLinea( largo , direccionActual , cantFlores , cantPapeles )
+        girar( direccionActual , 1 )
+        limpiarLinea( largo , direccionActual , cantFlores , cantPapeles )
+        girar( direccionActual , 3 )
+    sino
+      repetir( largo )
+        limpiarLinea( largo , direccionActual , cantFlores , cantPapeles )
+        girar( direccionActual , 3 )
+        limpiarLinea( largo , direccionActual , cantFlores , cantPapeles )
+        girar( direccionActual , 1 )
+  fin
+
+  proceso tomarFloresEscalera(  E largo : numero ; E escalones : numero ; E incrementar : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantFlores : numero )
+  comenzar
+    repetir( escalones )
+      tomarFloresEscalon( largo , SENTIDO_HORARIO , direccionActual , cantFlores )
+      largo := ( largo + incrementar )
+  fin
+
+  proceso tomarPapelesEscalera(  E largo : numero ; E escalones : numero ; E incrementar : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantPapeles : numero )
+  comenzar
+    repetir( escalones )
+      tomarPapelesEscalon( largo , SENTIDO_HORARIO , direccionActual , cantPapeles )
+      largo := ( largo + incrementar )
+  fin
+
+  proceso limpiarEscalera(  E largo : numero ; E escalones : numero ; E incrementar : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
+  comenzar
+    repetir( escalones )
+      limpiarEscalon( largo , SENTIDO_HORARIO , direccionActual , cantFlores , cantPapeles )
+      largo := ( largo + incrementar )
+  fin
+
+  proceso dejarFloresEscalon(  E largo : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantFlores : numero )
+  comenzar
+    si( SENTIDO_HORARIO )
+      repetir( largo )
+        dejarFloresLinea( largo , direccionActual , cantFlores )
+        girar( direccionActual , 1 )
+        dejarFloresLinea( largo , direccionActual , cantFlores )
+        girar( direccionActual , 3 )
+    sino
+      repetir( largo )
+        dejarFloresLinea( largo , direccionActual , cantFlores )
+        girar( direccionActual , 3 )
+        dejarFloresLinea( largo , direccionActual , cantFlores )
+        girar( direccionActual , 1 )
+  fin
+
+  proceso dejarPapelesEscalon(  E largo : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantPapeles : numero )
+  comenzar
+    si( SENTIDO_HORARIO )
+      repetir( largo )
+        dejarPapelesLinea( largo , direccionActual , cantPapeles )
+        girar( direccionActual , 1 )
+        dejarPapelesLinea( largo , direccionActual , cantPapeles )
+        girar( direccionActual , 3 )
+    sino
+      repetir( largo )
+        dejarPapelesLinea( largo , direccionActual , cantPapeles )
+        girar( direccionActual , 3 )
+        dejarPapelesLinea( largo , direccionActual , cantPapeles )
+        girar( direccionActual , 1 )
+  fin
+
+  proceso vaciarBolsaEscalon(  E largo : numero ; E escalones : numero ; E incrementar : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
+  comenzar
+    repetir( escalones )
+      vaciarBolsaLinea( largo , direccionActual , cantFlores , cantPapeles )
+      largo := ( largo + incrementar )
+  fin
+
+  proceso dejarPapelesEscalera(  E largo : numero ; E escalones : numero ; E incrementar : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantPapeles : numero )
+  comenzar
+    repetir( escalones )
+      dejarPapelesEscalon( largo , SENTIDO_HORARIO , direccionActual , cantPapeles )
+      largo := ( largo + incrementar )
+  fin
+
+  proceso dejarFloresEscalera(  E largo : numero ; E escalones : numero ; E incrementar : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantFlores : numero )
+  comenzar
+    repetir( escalones )
+      dejarFloresEscalon( largo , SENTIDO_HORARIO , direccionActual , cantFlores )
+      largo := ( largo + incrementar )
+  fin
+
+  proceso vaciarBolsaEscalera(  E largo : numero ; E escalones : numero ; E incrementar : numero ; E SENTIDO_HORARIO : boolean ; ES direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
+  comenzar
+    repetir( escalones )
+      vaciarBolsaLinea( largo , direccionActual , cantFlores , cantPapeles )
+      largo := ( largo + incrementar )
+  fin
 
 areas
-  ciudad: AreaC( 1 , 1 , 100 , 100 )
+  oficina  : AreaP  ( 1  , 1  , 1  , 1   )
+  papelera : AreaPC ( 11 , 11 , 11 , 11  )
+  area1    : AreaP  ( 2  , 1  , 2  , 100 )
+  area2    : AreaP  ( 3  , 1  , 3  , 100 )
+  area3    : AreaP  ( 4  , 1  , 4  , 100 )
+  area4    : AreaP  ( 5  , 1  , 5  , 100 )
 
 robots
-  robot Tipo1
+  robot papelero
   variables
-    direccionActual : numero
-    cantFlores  : numero
+    Av          : numero
+    Ca          : numero
+    AvInicial   : numero
+    CaInicial   : numero
     cantPapeles : numero
+    cantPasos   : numero
+    id          : numero
+    TOMAR       : boolean
+    PAPELES     : boolean
   comenzar
-    cantFlores  := 0
     cantPapeles := 0
-    direccionActual := 0
-    limpiarEscalera( 4 , 1 , 0 , direccionActual , V , V , cantFlores , V , cantPapeles )
+    cantPasos   := 0
+    RecibirMensaje( id    , jefe )
+    RecibirMensaje( Av    , jefe )
+    RecibirMensaje( Ca    , jefe )
+    RecibirMensaje( TOMAR , jefe )
+    mientras( TOMAR )
+      si( PosCa < 100 )
+        AvInicial := PosAv
+        CaInicial := PosCa
+        Pos( Av , Ca )
+        agarrarPapel( cantPapeles )
+        PAPELES := ( HayPapelEnLaEsquina )
+        Pos( AvInicial , CaInicial )
+        si( 0 < (cantPapeles - cantPasos) )
+          mover
+          incrementar( cantPasos )
+          si( PosCa = 100 )
+            PAPELES := F
+      sino
+        PAPELES := F
+      EnviarMensaje( PAPELES , jefe )
+      RecibirMensaje( TOMAR , jefe )
+    EnviarMensaje( id        , jefe )
+    EnviarMensaje( cantPasos , jefe )
   fin
-  
+
   robot TJefe
   variables
-    cantFlores  : numero
-    cantPapeles : numero
-    aux         : numero
-    cantEscalonesMasFloresQPapeles : numero
+    Av           : numero
+    Ca           : numero
+    TOMAR        : boolean
+    PAPELES      : boolean
+    id           : numero
+    cantPasos    : numero
+    idMax        : numero
+    cantPasosMax : numero
   comenzar
-    cantFlores  := 0
-    cantPapeles := 0
-    limpiarLinea( 9 , V , cantFlores , F , cantPapeles )
-    repetir( 3 )
-      RecibirMensaje( aux , * )
-      cantEscalonesMasFloresQPapeles := ( cantEscalonesMasFloresQPapeles + aux )
-    Informar( cantEscalonesMasFloresQPapeles )      
+    id := 1
+    repetir( 4 )
+      si( id = 1 )
+        EnviarMensaje( id , papelero1 )
+      sino
+        si( id = 2 )
+          EnviarMensaje( id , papelero2 )
+        sino
+          si( id = 3 )
+            EnviarMensaje( id , papelero3 )
+          sino  
+            EnviarMensaje( id , papelero4 )
+      incrementar( id )
+    Av := 11
+    Ca := 11
+    EnviarMensaje( Av , papelero1 )
+    EnviarMensaje( Ca , papelero1 )
+    EnviarMensaje( Av , papelero2 )
+    EnviarMensaje( Ca , papelero2 )
+    EnviarMensaje( Av , papelero3 )
+    EnviarMensaje( Ca , papelero3 )
+    EnviarMensaje( Av , papelero4 )
+    EnviarMensaje( Ca , papelero4 )
+    id      := 1
+    TOMAR   := V
+    PAPELES := V
+    mientras( PAPELES )
+      si( id = 4 )
+        EnviarMensaje( TOMAR , papelero4 )
+        id := 1
+      sino
+        si( id = 1 )
+          EnviarMensaje( TOMAR , papelero1 )
+        sino
+          si( id = 2 )
+            EnviarMensaje( TOMAR , papelero2 )
+          sino
+            EnviarMensaje( TOMAR , papelero3 )
+        incrementar( id )
+      RecibirMensaje( PAPELES , * )
+    EnviarMensaje( (~ TOMAR) , papelero1 )
+    EnviarMensaje( (~ TOMAR) , papelero2 )
+    EnviarMensaje( (~ TOMAR) , papelero3 )
+    EnviarMensaje( (~ TOMAR) , papelero4 )
+    cantPasosMax := ( -1 )
+    repetir( 4 )
+      RecibirMensaje( id , * )
+      si( id = 1 )
+        RecibirMensaje( cantPasos , papelero1 )
+      sino
+        si( id = 2 )
+          RecibirMensaje( cantPasos , papelero2 )
+        sino
+          si( id = 3 )
+            RecibirMensaje( cantPasos , papelero3 )
+          sino
+            RecibirMensaje( cantPasos , papelero4 )
+      si( cantPasosMax < cantPasos )
+        idMax         := id
+        cantPasosMax := cantPasos
+    Informar( 'Robot'  , idMax       )
+    Informar( 'pasos' , cantPasosMax )
   fin
 
 variables
-  robot1 : T1
-  robot2 : T1
-  robot3 : T1
-  jefe   : TJefe
+  jefe     : TJefe
+  papelero1 : papelero
+  papelero2 : papelero
+  papelero3 : papelero
+  papelero4 : papelero
 
 comenzar
-  AsignarArea( robot1 , ciudad )
-  AsignarArea( robot2 , ciudad )
-  AsignarArea( robot3 , ciudad )
-  AsignarArea( jefe   , ciudad )
-  Iniciar( robot1 , 1 , 1  )
-  Iniciar( robot2 , 2 , 1  )
-  Iniciar( robot3 , 3 , 1  )
-  Iniciar( jefe   , 4 , 1  )
+  AsignarArea( jefe      , oficina  )
+  AsignarArea( papelero1 , papelera )
+  AsignarArea( papelero2 , papelera )
+  AsignarArea( papelero3 , papelera )
+  AsignarArea( papelero4 , papelera )
+  AsignarArea( papelero1 , area1    )
+  AsignarArea( papelero2 , area2    )
+  AsignarArea( papelero3 , area3    )
+  AsignarArea( papelero4 , area4    )
+  Iniciar( jefe     , 1 , 1 )
+  Iniciar( papelero1 , 2 , 1 )
+  Iniciar( papelero2 , 3 , 1 )
+  Iniciar( papelero3 , 4 , 1 )
+  Iniciar( papelero4 , 5 , 1 )
 fin

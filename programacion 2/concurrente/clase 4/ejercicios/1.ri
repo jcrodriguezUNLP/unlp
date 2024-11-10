@@ -26,6 +26,43 @@ procesos
     mientras( direccionActual <> nuevaDireccion )
       girar( direccionActual , 1 )
   fin
+
+  proceso caminarLinea( E largo : numero ; E direccionActual : numero )
+  variables
+    AvAnterior : numero
+    CaAnterior : numero
+  comenzar
+    si( direccionActual = 0 )
+      repetir( largo )
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( PosAv , (PosCa + 1) )
+        mover
+        LiberarEsquina( AvAnterior , CaAnterior )
+    sino
+      si( direccionActual = 1 )
+        repetir( largo )
+          AvAnterior := PosAv
+          CaAnterior := PosCa
+          BloquearEsquina( (PosAv + 1) , PosCa )
+          mover
+          LiberarEsquina( AvAnterior , CaAnterior )
+      sino
+        si( direccionActual = 2 )
+          repetir( largo )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( PosAv , (PosCa - 1) )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+        sino
+          repetir( largo )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( (PosAv - 1) , PosCa )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+  fin
   
   proceso tomarFlores( ES cantFlores : numero )
   comenzar
@@ -47,7 +84,7 @@ procesos
     tomarPapeles ( cantPapeles )
   fin
   
-  proceso floresLinea( E largo : numero ; ES cantFlores : numero ; E direccionActual : numero )
+  proceso floresLinea( E largo : numero ; E direccionActual : numero ; ES cantFlores : numero )
   variables
     AvAnterior : numero
     CaAnterior : numero
@@ -88,7 +125,7 @@ procesos
             LiberarEsquina( AvAnterior , CaAnterior )
   fin
 
-  proceso papelesLinea( E largo : numero ; ES cantPapeles : numero ; E direccionActual : numero )
+  proceso papelesLinea( E largo : numero ; E direccionActual : numero ; ES cantPapeles : numero )
   variables
     AvAnterior : numero
     CaAnterior : numero
@@ -128,8 +165,8 @@ procesos
             mover
             LiberarEsquina( AvAnterior , CaAnterior )
   fin
-
-  proceso limpiarLinea( E largo : numero ; ES cantFlores : numero ; ES cantPapeles : numero ; E direccionActual : numero )
+  
+  proceso limpiarLinea( E largo : numero ; E direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
   variables
     AvAnterior : numero
     CaAnterior : numero
@@ -178,6 +215,7 @@ robots
   variables
     direccionActual : numero
     cantFlores      : numero
+    cantPapeles     : numero
     AvInicial       : numero
   comenzar
     AvInicial       := PosAv
@@ -186,25 +224,26 @@ robots
 
     BloquearEsquina( PosAv , PosCa )
 
-    floresLinea( (100 - PosCa) , cantFlores , direccionActual )
+    caminarLinea( (100 - PosCa) , direccionActual )
     girar( direccionActual , 1)
-    
-    floresLinea( (100 - PosAv) , cantFlores , direccionActual )
+
+    floresLinea( (100 - PosAv) , direccionActual , cantFlores )
     girar( direccionActual , 1)
     
     repetir( 3 )
-      floresLinea( 99 , cantFlores , direccionActual )
+      floresLinea( 99 , direccionActual , cantFlores )
       girar( direccionActual , 1 )
     
-    floresLinea( (AvInicial - 1) , cantFlores , direccionActual )
+    floresLinea( (AvInicial - 1) , direccionActual , cantFlores )
     girar( direccionActual , 1 )
     
-    floresLinea( 1 , cantFlores , direccionActual )
+    caminarLinea( 1 , direccionActual )
   fin
 
   robot papelero
   variables
     direccionActual : numero
+    cantFlores      : numero
     cantPapeles     : numero
     AvInicial       : numero
   comenzar
@@ -213,22 +252,21 @@ robots
     cantPapeles     := 0
 
     BloquearEsquina( PosAv , PosCa )
-    
-    papelesLinea( (100 - PosCa) , cantPapeles , direccionActual )
+
+    caminarLinea( (100 - PosCa) , direccionActual )
     girar( direccionActual , 1 )
     
-    
-    papelesLinea( (100 - PosAv) , cantPapeles , direccionActual )
+    papelesLinea( (100 - PosAv) , direccionActual , cantPapeles )
     girar( direccionActual , 1 )
     
     repetir( 3 )
-      papelesLinea( 99 , cantPapeles , direccionActual )
+      papelesLinea( 99 , direccionActual , cantPapeles )
       girar( direccionActual , 1 )
     
-    papelesLinea( (AvInicial - 1) , cantPapeles , direccionActual )
+    papelesLinea( (AvInicial - 1) , direccionActual , cantPapeles )
     girar(  direccionActual , 1 )
     
-    papelesLinea( 1 , cantPapeles , direccionActual )
+    caminarLinea( 1 , direccionActual )
   fin 
 
 variables
