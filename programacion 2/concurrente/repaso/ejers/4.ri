@@ -1,0 +1,150 @@
+programa ejer1
+procesos
+  proceso incrementar( ES x : numero )
+  comenzar
+    x := ( x + 1 )
+  fin
+
+  proceso decrementar( ES x : numero )
+  comenzar
+    x := ( x - 1 )
+  fin
+
+  proceso girar( ES direccionActual : numero ; E giros : numero )
+  comenzar
+    repetir( giros )
+      derecha
+      si( direccionActual < 3 )
+        incrementar( direccionActual )
+      sino
+        direccionActual := 0
+  fin
+  
+  proceso agarrarFlor( ES cantFlores : numero )
+  comenzar
+    si( HayFlorEnLaEsquina )
+      tomarFlor
+      incrementar( cantFlores )
+  fin
+
+  proceso dejarFlores( ES cantFlores : numero )
+  comenzar
+    mientras( HayFlorEnLaBolsa )
+      depositarFlor
+      decrementar( cantFlores )
+  fin
+
+  proceso tomarFlores( ES cantFlores : numero )
+  comenzar
+    mientras( HayFlorEnLaEsquina )
+      tomarFlor
+      incrementar( cantFlores )
+  fin
+
+areas
+  oficina   : AreaP  ( 4  , 1  , 4  , 1  )
+  area      : AreaPC ( 40 , 40 , 60 , 60 )
+  floreria  : AreaPC ( 1  , 1  , 3  , 1  )
+  deposito  : AreaP  ( 10 , 10 , 10 , 10 )
+
+robots
+  robot TFlorero
+  variables
+    cantFlores      : numero
+    Av              : numero
+    Ca              : numero
+    AvInicial       : numero
+    CaInicial       : numero
+    direccionActual : numero
+    TOMAR           : boolean
+    cantFloresMax   : numero
+  comenzar
+    cantFlores      := 0
+    direccionActual := 0
+    AvInicial       := PosAv
+    CaInicial       := PosCa
+    BloquearEsquina( AvInicial , CaInicial )
+    RecibirMensaje( TOMAR , jefe )
+    mientras( TOMAR )
+      RecibirMensaje( Av , jefe )
+      RecibirMensaje( Ca , jefe )
+      BloquearEsquina( Av , Ca )
+      Pos( Av , Ca )
+      tomarFlores( cantFlores )
+      Pos( AvInicial , CaInicial )
+      LiberarEsquina( Av , Ca )
+      RecibirMensaje( TOMAR , jefe )
+    cantFloresMax := cantFlores
+    BloquearEsquina( 10 , 10 )
+    Pos( 10 , 10 )
+    dejarFlores( cantFlores )
+    Pos( AvInicial , CaInicial )
+    LiberarEsquina( 10 , 10 )
+    EnviarMensaje( cantFloresMax , jefe )
+  fin
+
+  robot TJefe
+  variables
+    cantFlores  : numero
+    totalFlores : numero
+    cantRobots  : numero
+    Av          : numero
+    Ca          : numero
+    turnos      : numero
+    TOMAR       : boolean
+    id          : numero
+  comenzar
+    cantFlores := 0
+    cantRobots := 3
+    turnos     := 8
+    TOMAR      := V
+    BloquearEsquina( PosAv , PosCa )
+    repetir( turnos )
+      Random( Av , 40 , 60 )
+      Random( Ca , 40 , 60 )
+      Random( id , 1 , 3 )
+      si( id = 1 )
+        EnviarMensaje( TOMAR , florero1 )
+        EnviarMensaje( Av    , florero1 )
+        EnviarMensaje( Ca    , florero1 )
+      sino
+        si( id = 2 )
+          EnviarMensaje( TOMAR , florero2 )
+          EnviarMensaje( Av    , florero2 )
+          EnviarMensaje( Ca    , florero2 )
+        sino
+          EnviarMensaje( TOMAR , florero1 )
+          EnviarMensaje( Av    , florero1 )
+          EnviarMensaje( Ca    , florero1 )
+    EnviarMensaje( ~TOMAR , florero1 )
+    EnviarMensaje( ~TOMAR , florero2 )
+    EnviarMensaje( ~TOMAR , florero3 )
+    totalFlores := 0
+    repetir( cantRobots )
+      RecibirMensaje( cantFlores , * )
+      totalFlores := ( totalFlores + cantFlores )
+    Informar( 'Total flores' , totalFlores )
+  fin
+
+variables
+  jefe     : TJefe
+  florero1 : TFlorero
+  florero2 : TFlorero
+  florero3 : TFlorero
+
+comenzar
+  AsignarArea( jefe     , oficina  )
+  AsignarArea( florero1 , floreria )
+  AsignarArea( florero2 , floreria )
+  AsignarArea( florero3 , floreria )
+  AsignarArea( florero1 , area     )
+  AsignarArea( florero2 , area     )
+  AsignarArea( florero3 , area     )
+  AsignarArea( florero1 , deposito )
+  AsignarArea( florero2 , deposito )
+  AsignarArea( florero3 , deposito )
+  Iniciar( jefe     , 4 , 1 )
+  Iniciar( florero1 , 1 , 1 )
+  Iniciar( florero2 , 2 , 1 )
+  Iniciar( florero3 , 3 , 1 )
+fin

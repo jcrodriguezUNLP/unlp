@@ -142,6 +142,7 @@ procesos
             BloquearEsquina( (PosAv - 1) , PosCa )
             mover
             LiberarEsquina( AvAnterior , CaAnterior )
+    tomarFlores( cantFlores )
   fin
 
   proceso tomarPapelesLinea( E largo : numero ; E direccionActual : numero ; ES cantPapeles : numero )
@@ -183,6 +184,7 @@ procesos
             BloquearEsquina( (PosAv - 1) , PosCa )
             mover
             LiberarEsquina( AvAnterior , CaAnterior )
+    tomarPapeles( cantPapeles )
   fin
   
   proceso limpiarLinea( E largo : numero ; E direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
@@ -224,6 +226,7 @@ procesos
             BloquearEsquina( (PosAv - 1) , PosCa )
             mover
             LiberarEsquina( AvAnterior , CaAnterior )
+    limpiarEsquina( cantFlores , cantPapeles )
   fin
 
   proceso dejarFlor( ES cantFlores : numero )
@@ -267,7 +270,7 @@ procesos
   comenzar
     si( direccionActual = 0 )
       repetir( largo )
-        dejarFlor( cantFlores )
+        dejarFlores( cantFlores )
         AvAnterior := PosAv
         CaAnterior := PosCa
         BloquearEsquina( PosAv , (PosCa + 1) )
@@ -276,7 +279,7 @@ procesos
     sino
       si( direccionActual = 1 )
         repetir( largo )
-          dejarFlor( cantFlores )
+          dejarFlores( cantFlores )
           AvAnterior := PosAv
           CaAnterior := PosCa
           BloquearEsquina( (PosAv + 1) , PosCa )
@@ -285,7 +288,7 @@ procesos
       sino
         si( direccionActual = 2 )
           repetir( largo )
-            dejarFlor( cantFlores )
+            dejarFlores( cantFlores )
             AvAnterior := PosAv
             CaAnterior := PosCa
             BloquearEsquina( PosAv , (PosCa - 1) )
@@ -293,12 +296,13 @@ procesos
             LiberarEsquina( AvAnterior , CaAnterior )
         sino
           repetir( largo )
-            dejarFlor( cantFlores )
+            dejarFlores( cantFlores )
             AvAnterior := PosAv
             CaAnterior := PosCa
             BloquearEsquina( (PosAv - 1) , PosCa )
             mover
             LiberarEsquina( AvAnterior , CaAnterior )
+    dejarFlores( cantFlores )
   fin
 
   proceso dejarPapelesLinea( E largo : numero ; E direccionActual : numero ; ES cantPapeles : numero )
@@ -308,7 +312,7 @@ procesos
   comenzar
     si( direccionActual = 0 )
       repetir( largo )
-        dejarPapel( cantPapeles )
+        dejarPapeles( cantPapeles )
         AvAnterior := PosAv
         CaAnterior := PosCa
         BloquearEsquina( PosAv , (PosCa + 1) )
@@ -317,7 +321,7 @@ procesos
     sino
       si( direccionActual = 1 )
         repetir( largo )
-          dejarPapel( cantPapeles )
+          dejarPapeles( cantPapeles )
           AvAnterior := PosAv
           CaAnterior := PosCa
           BloquearEsquina( (PosAv + 1) , PosCa )
@@ -326,7 +330,7 @@ procesos
       sino
         si( direccionActual = 2 )
           repetir( largo )
-            dejarPapel( cantPapeles )
+            dejarPapeles( cantPapeles )
             AvAnterior := PosAv
             CaAnterior := PosCa
             BloquearEsquina( PosAv , (PosCa - 1) )
@@ -334,12 +338,13 @@ procesos
             LiberarEsquina( AvAnterior , CaAnterior )
         sino
           repetir( largo )
-            dejarPapel( cantPapeles )
+            dejarPapeles( cantPapeles )
             AvAnterior := PosAv
             CaAnterior := PosCa
             BloquearEsquina( (PosAv - 1) , PosCa )
             mover
             LiberarEsquina( AvAnterior , CaAnterior )
+    dejarPapeles( cantPapeles )
   fin
 
   proceso vaciarBolsaLinea( E largo : numero ; E direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
@@ -381,6 +386,7 @@ procesos
             BloquearEsquina( (PosAv - 1) , PosCa )
             mover
             LiberarEsquina( AvAnterior , CaAnterior )
+    vaciarBolsa( cantFlores , cantPapeles )
   fin
 
   proceso tomarFloresPerimetro(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantFlores : numero )
