@@ -232,7 +232,7 @@ procesos
   proceso dejarFlor( ES cantFlores : numero )
   comenzar
     si( HayFlorEnLaBolsa )
-      dejarFlor
+      depositarFlor
       decrementar( cantFlores )
   fin
 
@@ -246,7 +246,7 @@ procesos
   proceso dejarFlores( ES cantFlores : numero )
   comenzar
     mientras( HayFlorEnLaBolsa )
-      dejarFlor
+      depositarFlor
       decrementar( cantFlores )
   fin
 
@@ -270,7 +270,7 @@ procesos
   comenzar
     si( direccionActual = 0 )
       repetir( largo )
-        dejarFlores( cantFlores )
+        dejarFlor( cantFlores )
         AvAnterior := PosAv
         CaAnterior := PosCa
         BloquearEsquina( PosAv , (PosCa + 1) )
@@ -279,7 +279,7 @@ procesos
     sino
       si( direccionActual = 1 )
         repetir( largo )
-          dejarFlores( cantFlores )
+          dejarFlor( cantFlores )
           AvAnterior := PosAv
           CaAnterior := PosCa
           BloquearEsquina( (PosAv + 1) , PosCa )
@@ -288,7 +288,7 @@ procesos
       sino
         si( direccionActual = 2 )
           repetir( largo )
-            dejarFlores( cantFlores )
+            dejarFlor( cantFlores )
             AvAnterior := PosAv
             CaAnterior := PosCa
             BloquearEsquina( PosAv , (PosCa - 1) )
@@ -296,13 +296,13 @@ procesos
             LiberarEsquina( AvAnterior , CaAnterior )
         sino
           repetir( largo )
-            dejarFlores( cantFlores )
+            dejarFlor( cantFlores )
             AvAnterior := PosAv
             CaAnterior := PosCa
             BloquearEsquina( (PosAv - 1) , PosCa )
             mover
             LiberarEsquina( AvAnterior , CaAnterior )
-    dejarFlores( cantFlores )
+    dejarFlor( cantFlores )
   fin
 
   proceso dejarPapelesLinea( E largo : numero ; E direccionActual : numero ; ES cantPapeles : numero )
@@ -312,7 +312,7 @@ procesos
   comenzar
     si( direccionActual = 0 )
       repetir( largo )
-        dejarPapeles( cantPapeles )
+        dejarPapel( cantPapeles )
         AvAnterior := PosAv
         CaAnterior := PosCa
         BloquearEsquina( PosAv , (PosCa + 1) )
@@ -321,7 +321,7 @@ procesos
     sino
       si( direccionActual = 1 )
         repetir( largo )
-          dejarPapeles( cantPapeles )
+          dejarPapel( cantPapeles )
           AvAnterior := PosAv
           CaAnterior := PosCa
           BloquearEsquina( (PosAv + 1) , PosCa )
@@ -330,7 +330,7 @@ procesos
       sino
         si( direccionActual = 2 )
           repetir( largo )
-            dejarPapeles( cantPapeles )
+            dejarPapel( cantPapeles )
             AvAnterior := PosAv
             CaAnterior := PosCa
             BloquearEsquina( PosAv , (PosCa - 1) )
@@ -338,13 +338,13 @@ procesos
             LiberarEsquina( AvAnterior , CaAnterior )
         sino
           repetir( largo )
-            dejarPapeles( cantPapeles )
+            dejarPapel( cantPapeles )
             AvAnterior := PosAv
             CaAnterior := PosCa
             BloquearEsquina( (PosAv - 1) , PosCa )
             mover
             LiberarEsquina( AvAnterior , CaAnterior )
-    dejarPapeles( cantPapeles )
+    dejarPapel( cantPapeles )
   fin
 
   proceso vaciarBolsaLinea( E largo : numero ; E direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
@@ -354,7 +354,8 @@ procesos
   comenzar
     si( direccionActual = 0 )
       repetir( largo )
-        vaciarBolsa( cantFlores , cantPapeles )
+        dejarFlor( cantFlores )
+        dejarPapel( cantPapeles )
         AvAnterior := PosAv
         CaAnterior := PosCa
         BloquearEsquina( PosAv , (PosCa + 1) )
@@ -363,7 +364,8 @@ procesos
     sino
       si( direccionActual = 1 )
         repetir( largo )
-          vaciarBolsa( cantFlores , cantPapeles )
+          dejarFlor( cantFlores )
+          dejarPapel( cantPapeles )
           AvAnterior := PosAv
           CaAnterior := PosCa
           BloquearEsquina( (PosAv + 1) , PosCa )
@@ -372,7 +374,8 @@ procesos
       sino
         si( direccionActual = 2 )
           repetir( largo )
-            vaciarBolsa( cantFlores , cantPapeles )
+            dejarFlor( cantFlores )
+            dejarPapel( cantPapeles )
             AvAnterior := PosAv
             CaAnterior := PosCa
             BloquearEsquina( PosAv , (PosCa - 1) )
@@ -380,13 +383,15 @@ procesos
             LiberarEsquina( AvAnterior , CaAnterior )
         sino
           repetir( largo )
-            vaciarBolsa( cantFlores , cantPapeles )
+            dejarFlor( cantFlores )
+            dejarPapel( cantPapeles )
             AvAnterior := PosAv
             CaAnterior := PosCa
             BloquearEsquina( (PosAv - 1) , PosCa )
             mover
             LiberarEsquina( AvAnterior , CaAnterior )
-    vaciarBolsa( cantFlores , cantPapeles )
+    dejarFlor( cantFlores )
+    dejarPapel( cantPapeles )
   fin
 
   proceso tomarFloresPerimetro(  E alto : numero ; E ancho : numero ; ES direccionActual : numero ; ES cantFlores : numero )
@@ -657,148 +662,88 @@ procesos
   fin
 
 areas
-  oficina  : AreaP  ( 1  , 1  , 1  , 1   )
-  papelera : AreaPC ( 11 , 11 , 11 , 11  )
-  area1    : AreaP  ( 2  , 1  , 2  , 100 )
-  area2    : AreaP  ( 3  , 1  , 3  , 100 )
-  area3    : AreaP  ( 4  , 1  , 4  , 100 )
-  area4    : AreaP  ( 5  , 1  , 5  , 100 )
+  oficina   : AreaP ( 1  , 5  , 1   , 5  )
+  area1     : AreaP ( 1  , 3  , 100 , 3  )
+  area2     : AreaP ( 1  , 4  , 100 , 4  )
+  deposito  : AreaP ( 10 , 10 , 10  , 10 )
 
 robots
-  robot papelero
+  robot TFlorero
   variables
-    Av          : numero
-    Ca          : numero
-    AvInicial   : numero
-    CaInicial   : numero
-    cantPapeles : numero
-    cantPasos   : numero
-    id          : numero
-    TOMAR       : boolean
-    PAPELES     : boolean
+    cantFlores      : numero
+    pasos           : numero
+    AvAnterior      : numero
+    CaAnterior      : numero
+    direccionActual : numero
+    TERMINE         : boolean
   comenzar
-    cantPapeles := 0
-    cantPasos   := 0
-    RecibirMensaje( id    , jefe )
-    RecibirMensaje( Av    , jefe )
-    RecibirMensaje( Ca    , jefe )
-    RecibirMensaje( TOMAR , jefe )
-    mientras( TOMAR )
-      si( PosCa < 100 )
-        AvInicial := PosAv
-        CaInicial := PosCa
-        Pos( Av , Ca )
-        agarrarPapel( cantPapeles )
-        PAPELES := ( HayPapelEnLaEsquina )
-        Pos( AvInicial , CaInicial )
-        si( 0 < (cantPapeles - cantPasos) )
-          mover
-          incrementar( cantPasos )
-          si( PosCa = 100 )
-            PAPELES := F
-      sino
-        PAPELES := F
-      EnviarMensaje( PAPELES , jefe )
-      RecibirMensaje( TOMAR , jefe )
-    EnviarMensaje( id        , jefe )
-    EnviarMensaje( cantPasos , jefe )
+    cantFlores      := 0
+    pasos           := 0
+    direccionActual := 0
+    TERMINE         := V
+    girar( direccionActual , 1 )
+    BloquearEsquina( PosAv , PosCa )
+    repetir( 99 )
+      si( (cantFlores = 10) | (pasos = 15) )
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( 10 , 10 )
+        Pos( 10 , 10 )
+        dejarFlores( cantFlores )
+        EnviarMensaje( ~TERMINE , cosechador )
+        Pos( AvAnterior , CaAnterior )
+        LiberarEsquina( 10 , 10 )
+        pasos := 0
+      agarrarFlor( cantFlores )
+      BloquearEsquina( (PosAv + 1) , PosCa )
+      mover
+      incrementar( pasos )
+      LiberarEsquina( (PosAv - 1) , PosCa )
+    agarrarFlor( cantFlores )
+    EnviarMensaje( TERMINE , cosechador )
   fin
 
-  robot TJefe
+  robot TCosechador
   variables
-    Av           : numero
-    Ca           : numero
-    TOMAR        : boolean
-    PAPELES      : boolean
-    id           : numero
-    cantPasos    : numero
-    idMax        : numero
-    cantPasosMax : numero
+    AvInicial         : numero
+    CaInicial         : numero
+    cantFlores        : numero
+    cantRobots        : numero
+    robotsFinalizados : numero
+    TERMINE           : boolean
   comenzar
-    id := 1
-    repetir( 4 )
-      si( id = 1 )
-        EnviarMensaje( id , papelero1 )
+    AvInicial         := PosAv
+    CaInicial         := PosCa
+    cantFlores        := 0
+    cantRobots        := 2
+    robotsFinalizados := 0
+    BloquearEsquina( AvInicial , CaInicial )
+    mientras( robotsFinalizados < cantRobots )
+      RecibirMensaje( TERMINE , * )
+      si( TERMINE )
+        incrementar( robotsFinalizados )
       sino
-        si( id = 2 )
-          EnviarMensaje( id , papelero2 )
-        sino
-          si( id = 3 )
-            EnviarMensaje( id , papelero3 )
-          sino  
-            EnviarMensaje( id , papelero4 )
-      incrementar( id )
-    Av := 11
-    Ca := 11
-    EnviarMensaje( Av , papelero1 )
-    EnviarMensaje( Ca , papelero1 )
-    EnviarMensaje( Av , papelero2 )
-    EnviarMensaje( Ca , papelero2 )
-    EnviarMensaje( Av , papelero3 )
-    EnviarMensaje( Ca , papelero3 )
-    EnviarMensaje( Av , papelero4 )
-    EnviarMensaje( Ca , papelero4 )
-    id      := 1
-    TOMAR   := V
-    PAPELES := V
-    mientras( PAPELES )
-      si( id = 4 )
-        EnviarMensaje( TOMAR , papelero4 )
-        id := 1
-      sino
-        si( id = 1 )
-          EnviarMensaje( TOMAR , papelero1 )
-        sino
-          si( id = 2 )
-            EnviarMensaje( TOMAR , papelero2 )
-          sino
-            EnviarMensaje( TOMAR , papelero3 )
-        incrementar( id )
-      RecibirMensaje( PAPELES , * )
-    EnviarMensaje( (~ TOMAR) , papelero1 )
-    EnviarMensaje( (~ TOMAR) , papelero2 )
-    EnviarMensaje( (~ TOMAR) , papelero3 )
-    EnviarMensaje( (~ TOMAR) , papelero4 )
-    cantPasosMax := ( -1 )
-    repetir( 4 )
-      RecibirMensaje( id , * )
-      si( id = 1 )
-        RecibirMensaje( cantPasos , papelero1 )
-      sino
-        si( id = 2 )
-          RecibirMensaje( cantPasos , papelero2 )
-        sino
-          si( id = 3 )
-            RecibirMensaje( cantPasos , papelero3 )
-          sino
-            RecibirMensaje( cantPasos , papelero4 )
-      si( cantPasosMax < cantPasos )
-        idMax         := id
-        cantPasosMax := cantPasos
-    Informar( 'Robot'  , idMax       )
-    Informar( 'pasos' , cantPasosMax )
+        BloquearEsquina( 10 , 10 )
+        Pos( 10 , 10 )
+        tomarFlores( cantFlores )
+        Pos( AvInicial , CaInicial )
+        LiberarEsquina( 10 , 10 )
+    Informar( 'Total flores' , cantFlores )
   fin
 
 variables
-  jefe     : TJefe
-  papelero1 : papelero
-  papelero2 : papelero
-  papelero3 : papelero
-  papelero4 : papelero
+  cosechador : TCosechador
+  florero1   : TFlorero
+  florero2   : TFlorero
 
 comenzar
-  AsignarArea( jefe      , oficina  )
-  AsignarArea( papelero1 , papelera )
-  AsignarArea( papelero2 , papelera )
-  AsignarArea( papelero3 , papelera )
-  AsignarArea( papelero4 , papelera )
-  AsignarArea( papelero1 , area1    )
-  AsignarArea( papelero2 , area2    )
-  AsignarArea( papelero3 , area3    )
-  AsignarArea( papelero4 , area4    )
-  Iniciar( jefe     , 1 , 1 )
-  Iniciar( papelero1 , 2 , 1 )
-  Iniciar( papelero2 , 3 , 1 )
-  Iniciar( papelero3 , 4 , 1 )
-  Iniciar( papelero4 , 5 , 1 )
+  AsignarArea( cosechador , oficina   )
+  AsignarArea( florero1   , area1     )
+  AsignarArea( florero2   , area2     )
+  AsignarArea( cosechador , deposito  )
+  AsignarArea( florero1   , deposito  )
+  AsignarArea( florero2   , deposito  )
+  Iniciar( cosechador , 1 , 5 )
+  Iniciar( florero1   , 1 , 3 )
+  Iniciar( florero2   , 1 , 4 )
 fin

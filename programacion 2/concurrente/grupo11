@@ -674,8 +674,6 @@ robots
     cantPapeles : numero
     GANE : boolean
   comenzar
-    cantFlores := 0
-    cantPapeles := 0
     RecibirMensaje( id , fiscalizador )
     direccionActual := 0
     tomarFloresLinea( 10 , direccionActual , cantFlores )
@@ -698,13 +696,10 @@ robots
       Pos( 100 , 100 )
       repetir( 50 )
         agarrarPapel( cantPapeles )
+      BloquearEsquina( 1 , 50 )
       Pos( 1 , 50 )
-      LiberarEsquina( 100 , 100 )
-      repetir( 49 )
-        dejarPapel( cantPapeles )
-        Pos( (PosAv + 2) , 50 )
-      dejarPapel( cantPapeles )
-      EnviarMensaje( id , fiscalizador )
+      cambiarDireccion( direccionActual , 1 )
+      
   fin
   
   robot papeleroAbajoA
@@ -718,8 +713,6 @@ robots
     cantPapeles : numero
     GANE : boolean
   comenzar
-    cantFlores := 0
-    cantPapeles := 0
     RecibirMensaje( id , fiscalizador )
     direccionActual := 0
     girar( direccionActual , 2 )
@@ -743,13 +736,9 @@ robots
       Pos( 100 , 100 )
       repetir( 50 )
         agarrarPapel( cantPapeles )
-      Pos( 2 , 50 )
-      LiberarEsquina( 100 , 100 )
-      repetir( 49 )
-        dejarPapel( cantPapeles )
-        Pos( (PosAv + 2) , 50 )
-      dejarPapel( cantPapeles )
-      EnviarMensaje( id , fiscalizador )
+      BloquearEsquina( 1 , 50 )
+      Pos( 1 , 50 )
+      cambiarDireccion( direccionActual , 1 )
   fin
   
   robot papeleroArribaB
@@ -763,8 +752,6 @@ robots
     cantPapeles : numero
     GANE : boolean
   comenzar
-    cantFlores := 0
-    cantPapeles := 0
     RecibirMensaje( id , fiscalizador )
     direccionActual := 0
     tomarFloresLinea( 10 , direccionActual , cantFlores )
@@ -787,13 +774,9 @@ robots
       Pos( 100 , 100 )
       repetir( 50 )
         agarrarPapel( cantPapeles )
+      BloquearEsquina( 1 , 50 )
       Pos( 1 , 50 )
-      LiberarEsquina( 100 , 100 )
-      repetir( 49 )
-        dejarPapel( cantPapeles )
-        Pos( (PosAv + 2) , 50 )
-      dejarPapel( cantPapeles )
-      EnviarMensaje( id , fiscalizador )
+      cambiarDireccion( direccionActual , 1 )
   fin
   
   robot papeleroAbajoB
@@ -807,8 +790,6 @@ robots
     cantPapeles : numero
     GANE : boolean
   comenzar
-    cantFlores := 0
-    cantPapeles := 0
     RecibirMensaje( id , fiscalizador )
     direccionActual := 0
     girar( direccionActual , 2 )
@@ -832,13 +813,9 @@ robots
       Pos( 100 , 100 )
       repetir( 50 )
         agarrarPapel( cantPapeles )
-      Pos( 2 , 50 )
-      LiberarEsquina( 100 , 100 )
-      repetir( 49 )
-        dejarPapel( cantPapeles )
-        Pos( (PosAv + 2) , 50 )
-      dejarPapel( cantPapeles )
-      EnviarMensaje( id , fiscalizador )
+      BloquearEsquina( 1 , 50 )
+      Pos( 1 , 50 )
+      cambiarDireccion( direccionActual , 1 )
   fin
   
   robot TFiscalizador
@@ -847,7 +824,6 @@ robots
     cantFlores : numero
     cantFloresA : numero
     cantFloresB : numero
-    GANE : boolean
   comenzar
     EnviarMensaje( 1 , papelero1 )
     EnviarMensaje( 2 , papelero2 )
@@ -874,20 +850,14 @@ robots
     si( cantFloresA < cantFloresB )
       Informar( 'Equipo ganador B' , cantFloresB )
       GANE := V
-      EnviarMensaje( ~GANE , papelero1 )
-      EnviarMensaje( ~GANE , papelero2 )
       EnviarMensaje( GANE , papelero3 )
+      EnviarMensaje( GANE , papelero4 )
+      EnviarMensaje( ~GANE , papelero3 )
       EnviarMensaje( GANE , papelero4 )
     sino
       Informar( 'Equipo ganador A' , cantFloresA )
-      EnviarMensaje( ~GANE , papelero3 )
-      EnviarMensaje( ~GANE , papelero4 )
-      EnviarMensaje( GANE , papelero1 )
-      EnviarMensaje( GANE , papelero2 )
-    RecibirMensaje( id , * )
-    Informar( 'super campeon papelero' , id )
-    RecibirMensaje( id , * )
-    Informar( 'segundo papelero' , id )
+      EnviarMensaje( GANE , papelero3 )
+      EnviarMensaje( GANE , papelero4 )
   fin
   
 

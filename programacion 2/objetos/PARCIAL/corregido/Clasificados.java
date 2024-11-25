@@ -29,7 +29,7 @@ public class Clasificados extends Piloto {
                 }
             }
                      
-            return puntos ;        
+            return( puntos ) ;        
         }
     //
 
@@ -39,6 +39,6 @@ public class Clasificados extends Piloto {
 
         texto = ( super.toString() + "\n                tiempo: " + tiempo.toString() ) ;
         
-        return texto ;
+        return( texto ) ;
     }
 }

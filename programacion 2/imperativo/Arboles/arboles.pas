@@ -268,7 +268,7 @@ Type
   end ;
 //
 
-//  procedure eliminar ( var arbol : TArbol ; numero : Integer ) ;
+// procedure eliminar ( var arbol : TArbol ; numero : Integer ) ;
   procedure eliminar ( var arbol : TArbol ; numero : Integer ) ;
   var
     aux : TArbol ;
@@ -333,93 +333,94 @@ Type
       end ;
   end ;
 //
-//  procedure menu ( var opcion : Integer ; var arbol : TArbol ; LV : TListaVacunas ) ; // ATR
-    procedure menu ( var opcion : Integer ; var arbol : TArbol ; LV : TListaVacunas ) ; // ATR
-    var
-      nivelAnt : Integer ;
-      repetir  : Boolean ;
 
-    begin
-      separador ( 3                                       ) ;
-      WriteLn   ( 'Menu: '                                ) ;
-      WriteLn   ( '    1. Reiniciar estructura'           ) ;
-      WriteLn   ( '    2. Generar Arbol'                  ) ;
-      WriteLn   ( '    3. Imprimir arbol'                 ) ;
-      WriteLn   ( '    4. Imprimir acotado'               ) ;
-      WriteLn   ( '    5. Informar paciente mas vacunas ' ) ;
-      separador ( 1                                       ) ;
-      WriteLn   ( '    0. Finalizar programa'             ) ;
+// procedure menu ( var opcion : Integer ; var arbol : TArbol ; LV : TListaVacunas ) ; // ATR
+  procedure menu ( var opcion : Integer ; var arbol : TArbol ; LV : TListaVacunas ) ; // ATR
+  var
+    nivelAnt : Integer ;
+    repetir  : Boolean ;
+
+  begin
+    separador ( 3                                       ) ;
+    WriteLn   ( 'Menu: '                                ) ;
+    WriteLn   ( '    1. Reiniciar estructura'           ) ;
+    WriteLn   ( '    2. Generar Arbol'                  ) ;
+    WriteLn   ( '    3. Imprimir arbol'                 ) ;
+    WriteLn   ( '    4. Imprimir acotado'               ) ;
+    WriteLn   ( '    5. Informar paciente mas vacunas ' ) ;
+    separador ( 1                                       ) ;
+    WriteLn   ( '    0. Finalizar programa'             ) ;
 
 
-      repeat
-        separador ( 1          ) ;
-        Write     ( 'Opcion: ' ) ;
-        ReadLn    ( opcion     ) ;
+    repeat
+      separador ( 1          ) ;
+      Write     ( 'Opcion: ' ) ;
+      ReadLn    ( opcion     ) ;
 
-        repetir := ( (opcion < 0) or (6 < opcion) ) ;
+      repetir := ( (opcion < 0) or (6 < opcion) ) ;
 
-        if ( repetir ) then
-        begin
-          separador ( 1                 ) ;
-          WriteLn   ( 'Numero invalido' ) ;
-        end ;
-      until( not repetir ) ;
-
-      separador( 3 ) ;
-
-      case opcion of
-        0:
-          begin
-            WriteLn( 'Programa Finalizado' ) ;
-          end ;
-        1:
-          begin
-            WriteLn          ( 'Arbol inicializado' ) ;
-            inicializarArbol ( arbol                ) ;
-          end ;
-        2:
-          begin
-            WriteLn      ( 'Arbol generado' ) ;
-            generarArbol ( arbol , LV       ) ;
-          end ;
-        3:
-          begin
-            if ( arbol <> Nil ) then
-            begin
-              nivelAnt := -1 ;
-              graficarArbol( arbol , 90 , 0 , nivelAnt ) ;
-            end else
-            begin
-              WriteLn( 'Arbol esta vacio' ) ;
-            end ;
-          end ;
-        4: 
-          begin
-            if ( arbol <> Nil ) then
-            begin
-              writeln( '    DNI         Vacunas aplicadas' ) ;
-              writeln( '.................................' ) ;
-              
-              informarAcotado( arbol , 20000000 , 50000000 , 1 ) ;
-              
-              writeln( '.................................' ) ;
-            end else
-            begin
-              WriteLn( 'Arbol vacio' ) ;
-            end ;
-          end ;
-        5:
-          begin
-            if ( arbol <> Nil ) then
-            begin
-              imprimirMasVacunasAplicadas( arbol ) ;
-            end else
-            begin
-              WriteLn( 'Arbol vacio' ) ;
-            end ;
-          end ;
+      if ( repetir ) then
+      begin
+        separador ( 1                 ) ;
+        WriteLn   ( 'Numero invalido' ) ;
       end ;
+    until( not repetir ) ;
+
+    separador( 3 ) ;
+
+    case opcion of
+      0:
+        begin
+          WriteLn( 'Programa Finalizado' ) ;
+        end ;
+      1:
+        begin
+          WriteLn          ( 'Arbol inicializado' ) ;
+          inicializarArbol ( arbol                ) ;
+        end ;
+      2:
+        begin
+          WriteLn      ( 'Arbol generado' ) ;
+          generarArbol ( arbol , LV       ) ;
+        end ;
+      3:
+        begin
+          if ( arbol <> Nil ) then
+          begin
+            nivelAnt := -1 ;
+            graficarArbol( arbol , 90 , 0 , nivelAnt ) ;
+          end else
+          begin
+            WriteLn( 'Arbol esta vacio' ) ;
+          end ;
+        end ;
+      4: 
+        begin
+          if ( arbol <> Nil ) then
+          begin
+            writeln( '    DNI         Vacunas aplicadas' ) ;
+            writeln( '.................................' ) ;
+            
+            informarAcotado( arbol , 20000000 , 50000000 , 1 ) ;
+            
+            writeln( '.................................' ) ;
+          end else
+          begin
+            WriteLn( 'Arbol vacio' ) ;
+          end ;
+        end ;
+      5:
+        begin
+          if ( arbol <> Nil ) then
+          begin
+            imprimirMasVacunasAplicadas( arbol ) ;
+          end else
+          begin
+            WriteLn( 'Arbol vacio' ) ;
+          end ;
+        end ;
     end ;
+  end ;
 //
 
 Var
