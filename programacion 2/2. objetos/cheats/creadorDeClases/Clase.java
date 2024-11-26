@@ -176,13 +176,7 @@ class Clase {
 
             // abstrctos
             for( MetodoAbstracto metodo : getMetodosAbstractosHeredados() ) {
-                codigo.append( metodo.generarCodigo() )
-                      .append( "\n" ) ;
-            }
-            
-            for( MetodoAbstracto metodo : metodosAbstractos ) {
-                codigo.append( "abstract " )
-                      .append( metodo.generarCodigo() )
+                codigo.append( "\n" + Sangria.sangria( 2 )+ metodo.generarCodigo() )
                       .append( " {" )
                       .append( "\n" )
                       .append( Sangria.sangria( 3 ) )
@@ -191,6 +185,14 @@ class Clase {
                       .append( Sangria.sangria( 2 ) )
                       .append( "}" )
                       .append( "\n" ) ;
+            }
+            
+            for( MetodoAbstracto metodo : metodosAbstractos ) {
+                codigo.append( "\n" )
+                      .append( Sangria.sangria( 2 ) )
+                      .append( "abstract " )
+                      .append( metodo.generarCodigo() )
+                      .append( " ;\n" ) ;
             }
 
         //

@@ -21,12 +21,11 @@ public class MetodoAbstracto {
         StringBuilder codigo = new StringBuilder() ;
 
         // Definir el método
-        codigo.append( "\n" + Sangria.sangria( 2 ) )
-              .append( "public " )
+        codigo.append( "public " )
               .append( tipo )
               .append( " " )
               .append( nombre )
-              .append( "() ;" ) ;
+              .append( "()" ) ;
 
 
         return codigo.toString() ;

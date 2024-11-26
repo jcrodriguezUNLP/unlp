@@ -37,7 +37,7 @@ public class CuentaCorriente extends CuentaBancaria {
                 costo += ( (dinero * 0.02) * cantChequesDepositados ) ;
             }
 
-            return( costo );
+            return( costo ) ;
         } ;
 
         @Override
