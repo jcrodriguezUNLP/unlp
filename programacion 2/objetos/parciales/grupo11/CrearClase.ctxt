@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.target=CrearClase
-comment1.params=args
-comment1.target=void\ main(java.lang.String[])
-comment2.params=str
-comment2.target=java.lang.String\ capitalize(java.lang.String)
-numComments=3

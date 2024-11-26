@@ -1,9 +1,0 @@
-#BlueJ class context
-comment0.target=TablaPuntajesF1
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ TablaPuntajesF1\ here.\r\n\ \r\n\ @author\ (Leandro\ Romanut)\ \r\n\ @version\ (1.0)\r\n
-comment1.params=
-comment1.target=TablaPuntajesF1()
-comment2.params=posicion
-comment2.target=int\ obtenerPuntaje(int)
-comment2.text=\r\n\ M\u00E9todo\ para\ saber\ el\ puntaje\ que\ obtuvo\ un\ piloto\ en\ la\ carrera\ de\ F1\r\n\ \r\n\ @params\ posicion\r\n\ @return\ int\r\n
-numComments=3

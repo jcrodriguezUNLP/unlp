@@ -1,0 +1,129 @@
+programa ejer1
+procesos
+  proceso incrementar( ES x : numero )
+  comenzar
+    x := ( x + 1 )
+  fin
+
+  proceso decrementar( ES x : numero )
+  comenzar
+    x := ( x - 1 )
+  fin
+
+  proceso girar( ES direccionActual : numero ; E giros : numero )
+  comenzar
+    repetir( giros )
+      derecha
+      si( direccionActual < 3 )
+        incrementar( direccionActual )
+      sino
+        direccionActual := 0
+  fin
+  
+  proceso agarrarFlor( ES cantFlores : numero )
+  comenzar
+    si( HayFlorEnLaEsquina )
+      tomarFlor
+      incrementar( cantFlores )
+  fin
+
+  proceso dejarFlores( ES cantFlores : numero )
+  comenzar
+    mientras( HayFlorEnLaBolsa )
+      depositarFlor
+      decrementar( cantFlores )
+  fin
+
+  proceso tomarFlores( ES cantFlores : numero )
+  comenzar
+    mientras( HayFlorEnLaEsquina )
+      tomarFlor
+      incrementar( cantFlores )
+  fin
+
+areas
+  oficina   : AreaP ( 1  , 5  , 1   , 5  )
+  area1     : AreaP ( 1  , 3  , 100 , 3  )
+  area2     : AreaP ( 1  , 4  , 100 , 4  )
+  deposito  : AreaP ( 10 , 10 , 10  , 10 )
+
+robots
+  robot TFlorero
+  variables
+    cantFlores      : numero
+    pasos           : numero
+    AvAnterior      : numero
+    CaAnterior      : numero
+    direccionActual : numero
+    TERMINE         : boolean
+  comenzar
+    cantFlores      := 0
+    pasos           := 0
+    direccionActual := 0
+    TERMINE         := V
+    girar( direccionActual , 1 )
+    BloquearEsquina( PosAv , PosCa )
+    repetir( 99 )
+      si( (cantFlores < 10) & (pasos < 15) )
+        agarrarFlor( cantFlores )
+        BloquearEsquina( (PosAv + 1) , PosCa )
+        mover
+        incrementar( pasos )
+        LiberarEsquina( (PosAv - 1) , PosCa )
+      sino
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( 10 , 10 )
+        Pos( 10 , 10 )
+        dejarFlores( cantFlores )
+        EnviarMensaje( ~TERMINE , cosechador )
+        Pos( AvAnterior , CaAnterior )
+        LiberarEsquina( 10 , 10 )
+        pasos := 0
+    EnviarMensaje( TERMINE , cosechador )
+  fin
+
+  robot TCosechador
+  variables
+    AvInicial         : numero
+    CaInicial         : numero
+    cantFlores        : numero
+    cantRobots        : numero
+    robotsFinalizados : numero
+    TERMINE           : boolean
+  comenzar
+    AvInicial         := PosAv
+    CaInicial         := PosCa
+    cantFlores        := 0
+    cantRobots        := 2
+    robotsFinalizados := 0
+    BloquearEsquina( AvInicial , CaInicial )
+    mientras( robotsFinalizados < cantRobots )
+      RecibirMensaje( TERMINE , * )
+      si( TERMINE )
+        incrementar( robotsFinalizados )
+      sino
+        BloquearEsquina( 10 , 10 )
+        Pos( 10 , 10 )
+        tomarFlores( cantFlores )
+        Pos( AvInicial , CaInicial )
+        LiberarEsquina( 10 , 10 )
+    Informar( 'Total flores' , cantFlores )
+  fin
+
+variables
+  cosechador : TCosechador
+  florero1   : TFlorero
+  florero2   : TFlorero
+
+comenzar
+  AsignarArea( cosechador , oficina   )
+  AsignarArea( florero1   , area1     )
+  AsignarArea( florero2   , area2     )
+  AsignarArea( cosechador , deposito  )
+  AsignarArea( florero1   , deposito  )
+  AsignarArea( florero2   , deposito  )
+  Iniciar( cosechador , 1 , 5 )
+  Iniciar( florero1   , 1 , 3 )
+  Iniciar( florero2   , 1 , 4 )
+fin

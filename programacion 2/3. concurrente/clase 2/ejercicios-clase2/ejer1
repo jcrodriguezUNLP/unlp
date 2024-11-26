@@ -1,0 +1,53 @@
+programa ejer1
+procesos
+  proceso recorrerAV_JuntandoFlores_ContandoEsqVacias( E Av : numero ; E Ca : numero ; E largo : numero )
+  variables
+    flores    : numero
+    esqVacias : numero
+    terminar  : boolean
+
+  comenzar
+    flores    := 0
+    esqVacias := 0
+    terminar  := F
+
+    
+    Pos( Av , Ca )
+    
+    mientras ( ~ terminar )
+      si ( ~ HayFlorEnLaEsquina )
+        esqVacias := ( esqVacias + 1 )
+      sino
+        mientras( HayFlorEnLaEsquina )
+          tomarFlor
+          flores := ( flores + 1 )
+      
+      si ( PosCa < largo )
+        mover
+      sino
+        terminar := V
+    
+    Informar( 'Num de Esquinas Vacias' , esqVacias )
+    Informar( 'Num de Flores' , flores )
+    Informar( 'Vaciando bolsa' , 0 )
+
+    mientras ( HayFlorEnLaBolsa )
+      depositarFlor
+  fin
+
+areas
+  ciudad: AreaC( 1 , 1 , 100 , 100 )
+  
+robots
+  robot robot1
+  comenzar
+    recorrerAV_JuntandoFlores_ContandoEsqVacias( 1 , 1 , 100 )
+  fin
+
+variables
+  R_info: robot1
+
+comenzar
+  AsignarArea( R_info , ciudad )
+  Iniciar    ( R_info , 1 , 1  )
+fin

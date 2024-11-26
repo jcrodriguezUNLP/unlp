@@ -1,0 +1,188 @@
+programa ejer1
+procesos
+  proceso incrementar( ES x : numero )
+  comenzar
+    x := ( x + 1 )
+  fin
+
+  proceso tomarFlores( ES cantFlores : numero )
+  comenzar
+    mientras( HayFlorEnLaEsquina )
+      tomarFlor
+      incrementar( cantFlores )
+  fin
+  
+  proceso tomarPapeles( ES cantPapeles : numero )
+  comenzar
+    mientras( HayPapelEnLaEsquina )
+      tomarPapel
+      incrementar( cantPapeles )
+  fin
+  
+  proceso limpiarEsquina( ES cantFlores : numero ; ES cantPapeles : numero )
+  comenzar
+    tomarFlores  ( cantFlores  )
+    tomarPapeles ( cantPapeles )
+  fin
+
+  proceso limpiarLinea( E largo : numero ; E direccionActual : numero ; ES cantFlores : numero ; ES cantPapeles : numero )
+  variables
+    AvAnterior : numero
+    CaAnterior : numero
+  comenzar
+    si( direccionActual = 0 )
+      repetir( largo )
+        limpiarEsquina( cantFlores , cantPapeles )
+        AvAnterior := PosAv
+        CaAnterior := PosCa
+        BloquearEsquina( PosAv , (PosCa + 1) )
+        mover
+        LiberarEsquina( AvAnterior , CaAnterior )
+    sino
+      si( direccionActual = 1 )
+        repetir( largo )
+          limpiarEsquina( cantFlores , cantPapeles )
+          AvAnterior := PosAv
+          CaAnterior := PosCa
+          BloquearEsquina( (PosAv + 1) , PosCa )
+          mover
+          LiberarEsquina( AvAnterior , CaAnterior )
+      sino
+        si( direccionActual = 2 )
+          repetir( largo )
+            limpiarEsquina( cantFlores , cantPapeles )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( PosAv , (PosCa - 1) )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+        sino
+          repetir( largo )
+            limpiarEsquina( cantFlores , cantPapeles )
+            AvAnterior := PosAv
+            CaAnterior := PosCa
+            BloquearEsquina( (PosAv - 1) , PosCa )
+            mover
+            LiberarEsquina( AvAnterior , CaAnterior )
+  fin
+   
+areas
+  oficina   : AreaP ( 1  , 1  , 1  , 1  )
+  floreria1 : AreaP ( 2  , 2  , 2  , 2  )
+  floreria2 : AreaP ( 6  , 6  , 6  , 6  )
+  area1     : AreaP ( 15 , 15 , 30 , 35 )
+  area2     : AreaP ( 40 , 40 , 55 , 60 )
+  deposito  : AreaP ( 10 , 10 , 10 , 10 )
+
+robots
+  robot limpiador
+  variables
+    id              : numero
+    Av              : numero
+    Ca              : numero
+    AvInicial       : numero
+    CaInicial       : numero
+    alto            : numero
+    ancho           : numero
+    cantFlores      : numero
+    direccionActual : numero
+  comenzar
+    cantFlores      := 0
+    direccionActual := 0
+    AvInicial       := PosAv
+    CaInicial       := PosCa
+    BloquearEsquina( AvInicial , CaInicial )
+    RecibirMensaje( id    , jefe )
+    RecibirMensaje( Av    , jefe )
+    RecibirMensaje( Ca    , jefe )
+    RecibirMensaje( alto  , jefe )
+    RecibirMensaje( ancho , jefe )
+    BloquearEsquina( Av , Ca )
+    Pos( Av , Ca )
+    LiberarEsquina( AvInicial , CaInicial )
+    tomarFloresPerimetro( alto , ancho , direccionActual , cantFlores )
+    EnviarMensaje( id         , jefe )
+    EnviarMensaje( cantFlores , jefe )
+    BloquearEsquina( 10 , 10 )
+    Pos( 10 , 10)
+    LiberarEsquina( Av , Ca )
+    dejarFlores( cantFlores )
+    BloquearEsquina( AvInicial , CaInicial )
+    Pos( AvInicial , CaInicial )
+    LiberarEsquina( 10 , 10 )
+  fin
+
+  robot TJefe
+  variables
+    cantRobots     : numero
+    Av             : numero
+    Ca             : numero
+    id             : numero
+    cantFlores     : numero
+    cantPapeles    : numero
+    idMaxFlores    : numero
+    idMaxPapeles   : numero
+    cantFloresMax  : numero
+    cantPapelesMax : numero
+  comenzar
+    cantRobots := 3
+    id         := 1
+    repetir( cantRobots )
+      Av := 1
+      Random( Ca , 60 , 80 )
+      si( id = 1 )
+        EnviarMensaje( id    , limpiador1 )
+        EnviarMensaje( Av    , limpiador1 )
+        EnviarMensaje( Ca    , limpiador1 )
+      sino
+        si( id = 2 )
+          EnviarMensaje( id    , limpiador2 )
+          EnviarMensaje( Av    , limpiador2 )
+          EnviarMensaje( Ca    , limpiador2 )
+        sino
+          EnviarMensaje( id    , limpiador3 )
+          EnviarMensaje( Av    , limpiador3 )
+          EnviarMensaje( Ca    , limpiador3 )
+      incrementar( id )
+    id := 1
+    repetir( cantRobots )
+      RecibirMensaje( id , * )
+      si( id = 1 )
+        RecibirMensaje( cantFlores  , limpiador1 )
+        RecibirMensaje( cantPapeles , limpiador1 )
+      sino
+        si( id = 2 )
+          RecibirMensaje( cantFlores  , limpiador2 )
+          RecibirMensaje( cantPapeles , limpiador2 )
+        sino
+          RecibirMensaje( cantFlores  , limpiador3 )
+          RecibirMensaje( cantPapeles , limpiador3 )
+      si( cantFloresMax < cantFlores )
+        cantFloresMax := cantFlores
+        idMaxFlores   := id
+      si( cantPapelesMax < cantPapeles )
+        cantPapelesMax := cantPapeles
+        idMaxPapeles   := id
+      incrementar( id )
+  si( idMaxFlores = idMaxPapeles )
+    si( idMaxFlores = 1 )
+      EnviarMensaje( 1 , limpiador1 )
+  fin
+
+variables
+  jefe     : TJefe
+  limpiador1 : limpiador
+  limpiador2 : limpiador
+
+comenzar
+  AsignarArea( jefe     , oficina   )
+  AsignarArea( limpiador1 , floreria1 )
+  AsignarArea( limpiador2 , floreria2 )
+  AsignarArea( limpiador1 , area1     )
+  AsignarArea( limpiador2 , area2     )
+  AsignarArea( limpiador1 , deposito  )
+  AsignarArea( limpiador2 , deposito  )
+  Iniciar( jefe     , 1 , 1 )
+  Iniciar( limpiador1 , 2 , 2 )
+  Iniciar( limpiador2 , 6 , 6 )
+fin
